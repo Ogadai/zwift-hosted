@@ -15,5 +15,8 @@
       viewBox: '114132 -204219 668391 444149',
       credit: { name: 'Zwift Blog', href: 'http://zwiftblog.com/' }
     }
+  },
+  site: {
+    cookieWarning: true
   }
 };
