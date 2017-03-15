@@ -2,6 +2,7 @@
   worlds: {
     1: {
       map: '/maps/watopia.png',
+      background: '#DBEFFC',
       viewBox: '-551868 -323969 599071 900906',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
     },
