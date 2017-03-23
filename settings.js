@@ -20,6 +20,16 @@
   site: {
     cookieWarning: true,
     title: 'ZwiftGPS',
+    approvalRequired: {
+      message: 'ZwiftGPS isn\'t able to track private accounts',
+      alt: {
+        message: 'As an alternative, please try ZwiftMap from',
+        link: {
+          caption: 'ZwiftHacks.com',
+          addr: 'http://zwifthacks.com/zwiftmap-for-macos-is-here/'
+        }
+      }
+    },
     static: {
       route: '/maps',
       path: `${__dirname}/maps`
