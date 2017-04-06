@@ -20,4 +20,4 @@ const riderProvider = (username && password)
       : new Login();
 
 const server = new Server(riderProvider, { worlds: settings.worlds, site, strava });
-server.start(process.env.PORT || 3000);
+server.start(process.env.PORT || 8080);
