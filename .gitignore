@@ -29,3 +29,5 @@ node_modules
 .vs/
 npm-debug.log*
 web.config
+
+.vscode
