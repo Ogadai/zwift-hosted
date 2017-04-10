@@ -7,10 +7,10 @@ const username = process.env.ServiceUsername;
 const password = process.env.ServicePassword;
 
 const stravaClientId = process.env.StravaClientId;
-const strava = stravaClientId ? {
+const strava = stravaClientId ? Object.assign({
   clientId: stravaClientId,
   clientSecret: process.env.StravaClientSecret
-} : undefined;
+}, settings.strava) : undefined;
 
 const trackingId = process.env.TrackingId;
 const site = Object.assign({}, settings.site || {}, { trackingId });
