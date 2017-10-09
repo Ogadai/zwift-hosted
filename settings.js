@@ -13,7 +13,7 @@
     },
     3: {
       map: '/maps/london.gif',
-      viewBox: '51132 -202219 670391 442149',
+      viewBox: '-7868 -202219 788391 442149',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
     }
   },
