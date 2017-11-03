@@ -2,18 +2,20 @@
   worlds: {
     1: {
       map: '/maps/watopia.png',
-      background: '#DBEFFC',
-      viewBox: '-617368 -435969 776071 900906',
+      background: '#0886E4',
+      viewBox: '-626368 -392969 847071 845906',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
     },
     2: {
-      map: '/maps/richmond.jpg',
-      viewBox: '-283211 -289039 691768 462822',
+      map: '/maps/richmond.png',
+      background: '#B9B9B9',
+      viewBox: '-443211 -478039 842768 841822',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
     },
     3: {
-      map: '/maps/london.gif',
-      viewBox: '-7868 -202219 788391 442149',
+      map: '/maps/london.png',
+      background: '#7C9938',
+      viewBox: '-66868 -383219 846391 846149',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
     }
   },
