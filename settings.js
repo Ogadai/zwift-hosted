@@ -3,19 +3,19 @@
     1: {
       map: '/maps/watopia.png',
       background: '#0886E4',
-      viewBox: '-626368 -392969 847071 845906',
+      viewBox: '-625000 -395000 847000 847000',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
     },
     2: {
       map: '/maps/richmond.png',
       background: '#B9B9B9',
-      viewBox: '-443211 -478039 842768 841822',
+      viewBox: '-445000 -480000 847000 847000',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
     },
     3: {
       map: '/maps/london.png',
       background: '#7C9938',
-      viewBox: '-66868 -383219 846391 846149',
+      viewBox: '-67500 -383000 847000 847000',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
     }
   },
