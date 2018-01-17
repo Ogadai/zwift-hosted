@@ -4,19 +4,19 @@
       map: '/maps/zwiftquest.png',
       background: '#0886E4',
       viewBox: '-625000 -395000 847000 847000',
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
+      credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' }
     },
     2: {
       map: '/maps/richmond.png',
       background: '#B9B9B9',
       viewBox: '-445000 -480000 847000 847000',
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
+      credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' }
     },
     3: {
       map: '/maps/london.png',
       background: '#7C9938',
       viewBox: '-67500 -383000 847000 847000',
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
+      credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' }
     }
   },
   site: {
