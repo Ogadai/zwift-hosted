@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/Ogadai/zwift-hosted#readme",
   "dependencies": {
-    "zwift-second-screen": "0.0.87"
+    "zwift-second-screen": "0.0.88"
   }
 }
