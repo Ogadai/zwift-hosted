@@ -17,6 +17,18 @@
       background: '#7C9938',
       viewBox: '-67500 -383000 847000 847000',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
+    },
+    events: {
+      zwiftquest: {
+        1: {
+          map: '/maps/zwiftquest/watopia.png',
+          credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' }
+        },
+        3: {
+          map: '/maps/zwiftquest/london.png',
+          credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' }
+        }
+      }
     }
   },
   site: {
