@@ -1,10 +1,10 @@
 ﻿module.exports = {
   worlds: {
     1: {
-      map: '/maps/watopia.png',
+      map: '/maps/zwiftquest/watopia.png',
       background: '#0886E4',
       viewBox: '-625000 -395000 847000 847000',
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' }
+      credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' }
     },
     2: {
       map: '/maps/richmond.png',
