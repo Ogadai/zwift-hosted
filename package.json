@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/Ogadai/zwift-hosted#readme",
   "dependencies": {
+    "axios": "^0.17.1",
+    "zwift-mobile-api": "latest",
     "zwift-second-screen": "0.0.97"
   }
 }

@@ -1,4 +1,6 @@
-﻿module.exports = {
+﻿const zwiftquest = require('./zwiftquest');
+
+module.exports = {
   worlds: {
     1: {
       map: '/maps/watopia.png',
@@ -40,14 +42,17 @@
         1: {
           map: '/maps/zwiftquest/watopia.png',
           credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' },
-          getPoints: () => Promise.resolve([
-          ])
+          getPoints: () => zwiftquest.getWaypoints(1)
+        },
+        2: {
+          map: '/maps/zwiftquest/richmond.png',
+          credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' },
+          getPoints: () => zwiftquest.getWaypoints(2)
         },
         3: {
           map: '/maps/zwiftquest/london.png',
           credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' },
-          getPoints: () => Promise.resolve([
-          ])
+          getPoints: () => zwiftquest.getWaypoints(3)
         }
       }
     }
