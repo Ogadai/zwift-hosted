@@ -19,9 +19,7 @@ function getWaypoints(worldId) {
         points.push(toPoint(worldId, waypoint, 'zq_waypoint'));
       })
 
-      if (quest.finish && (quest.finish.lat != quest.start.lat || quest.finish.long != quest.start.long)) {
-        points.push(toPoint(worldId, quest.finish, 'zq_start'));
-      }
+      points.push(toPoint(worldId, quest.finish, 'zq_finish'));
       return points;
     }
     return [];
