@@ -22,6 +22,6 @@
   "dependencies": {
     "axios": "^0.17.1",
     "zwift-mobile-api": "latest",
-    "zwift-second-screen": "0.0.101"
+    "zwift-second-screen": "0.0.102"
   }
 }
