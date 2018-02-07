@@ -32,7 +32,7 @@ module.exports = {
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
       getPoints: () => Promise.resolve([
         { name: 'Box Hill', x: 474491, y: 138646, image: 'kom', rotate: 90 },
-        { name: 'Keith Hill', x: 550217, y: 287329, image: 'mountain', rotate: 80 },
+        { name: 'Keith Hill', x: 550217, y: 287329, image: 'kompink', rotate: 80 },
         { name: 'Sprint Banner', x: 230658, y: -28483, image: 'sprint', rotate: 55 },
         { name: 'Start Banner', x: 591009, y: -82260, image: 'start', rotate: -80 }
       ])
