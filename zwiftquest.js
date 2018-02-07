@@ -7,7 +7,7 @@ const rotations = {
   3: 0
 }
 
-const WAYPOINTS_URL = 'https://drive.google.com/uc?id=1mEjLuwErn5DrjaIkhx13BVe2lC6j_iwv&export=download';
+const WAYPOINTS_URL = 'http://zwiftquest.com/wp-content/uploads/2018/02/waypoints.txt';
 
 function getWaypoints(worldId) {
   return downloadQuest().then(quest => {
@@ -29,7 +29,8 @@ function getWaypoints(worldId) {
 }
 
 function toPoint(worldId, waypoint, image) {
-  const xy = mapLatLong[worldId].toXY(waypoint.lat, waypoint.long);
+  const mapDef = mapLatLong[worldId];
+  const xy = mapDef.toXY(waypoint.lat + mapDef.offset.lat, waypoint.long + mapDef.offset.long);
   return {
     name: waypoint.name,
     x: xy.x,
