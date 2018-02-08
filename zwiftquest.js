@@ -13,30 +13,29 @@ function getWaypoints(worldId) {
   return downloadQuest().then(quest => {
     if (worldId === quest.worldId) {
       const points = [
-        toPoint(worldId, quest.start, 'zq_start')
+        toPoint(worldId, quest.start, { image: 'zq_start', role: 'start' })
       ];
       quest.waypoints.forEach(waypoint => {
-        points.push(toPoint(worldId, waypoint, 'zq_waypoint'));
+        points.push(toPoint(worldId, waypoint, { image: 'zq_waypoint' }));
       })
 
-      points.push(toPoint(worldId, quest.finish, 'zq_finish'));
+      points.push(toPoint(worldId, quest.finish, { image: 'zq_finish', role: 'finish' }));
       return points;
     }
     return [];
   })
 }
 
-function toPoint(worldId, waypoint, image) {
+function toPoint(worldId, waypoint, props) {
   const mapDef = mapLatLong[worldId];
   const xy = mapDef.toXY(waypoint.lat + mapDef.offset.lat, waypoint.long + mapDef.offset.long);
-  return {
+  return Object.assign({
     name: waypoint.name,
     x: xy.x,
     y: xy.y,
-    image,
     rotate: rotations[worldId],
-    size: 1.5
-  };
+    size: 1.8
+  }, props);
 }
 
 function downloadQuest() {
