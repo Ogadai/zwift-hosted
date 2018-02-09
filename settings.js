@@ -1,4 +1,5 @@
 ﻿const zwiftquest = require('./zwiftquest');
+const GoldRush = require('./goldrush');
 
 module.exports = {
   worlds: {
@@ -7,52 +8,75 @@ module.exports = {
       background: '#0886E4',
       viewBox: '-625000 -395000 847000 847000',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      getPoints: () => Promise.resolve([
-        { name: 'Start Banner', x: 104047, y: -10948, image: 'start', rotate: 180 },
-        { name: 'Hilly KOM', x: 49683, y: 54712, image: 'kom', rotate: 60 },
-        { name: 'Sprint', x: -25404, y: -40021, image: 'sprint', rotate: 60 },
-        { name: 'Epic KOM', x: -361987, y: 86048, image: 'mountain', rotate: 30 },
-        { name: 'Jungle Start', x: -499228, y: -263780, image: 'banner', rotate: 20 }
-      ])
+      points: {
+        get: () => Promise.resolve([
+          { name: 'Start Banner', x: 104047, y: -10948, image: 'start', rotate: 180 },
+          { name: 'Hilly KOM', x: 49683, y: 54712, image: 'kom', rotate: 60 },
+          { name: 'Sprint', x: -25404, y: -40021, image: 'sprint', rotate: 60 },
+          { name: 'Epic KOM', x: -361987, y: 86048, image: 'mountain', rotate: 30 },
+          { name: 'Jungle Start', x: -499228, y: -263780, image: 'banner', rotate: 20 }
+        ])
+      }
     },
     2: {
       map: '/maps/richmond.png',
       background: '#B9B9B9',
       viewBox: '-445000 -480000 847000 847000',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      getPoints: () => Promise.resolve([
-        { name: 'Sprint Banner', x: 145912, y: -235695, image: 'sprint', rotate: 40 },
-        { name: 'Start Banner', x: -8764, y: 12332, image: 'start', rotate: 40 }
-      ])
+      points: {
+        get: () => Promise.resolve([
+          { name: 'Sprint Banner', x: 145912, y: -235695, image: 'sprint', rotate: 40 },
+          { name: 'Start Banner', x: -8764, y: 12332, image: 'start', rotate: 40 }
+        ])
+      }
     },
     3: {
       map: '/maps/london.png',
       background: '#7C9938',
       viewBox: '-67500 -383000 847000 847000',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      getPoints: () => Promise.resolve([
-        { name: 'Box Hill', x: 474491, y: 138646, image: 'kom', rotate: 90 },
-        { name: 'Keith Hill', x: 550217, y: 287329, image: 'kompink', rotate: 80 },
-        { name: 'Sprint Banner', x: 230658, y: -28483, image: 'sprint', rotate: 55 },
-        { name: 'Start Banner', x: 591009, y: -82260, image: 'start', rotate: -80 }
-      ])
+      points: {
+        get: () => Promise.resolve([
+          { name: 'Box Hill', x: 474491, y: 138646, image: 'kom', rotate: 90 },
+          { name: 'Keith Hill', x: 550217, y: 287329, image: 'kompink', rotate: 80 },
+          { name: 'Sprint Banner', x: 230658, y: -28483, image: 'sprint', rotate: 55 },
+          { name: 'Start Banner', x: 591009, y: -82260, image: 'start', rotate: -80 }
+        ])
+      }
     },
     events: {
       zwiftquest: {
         1: {
           map: '/maps/zwiftquest/watopia.png',
           credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' },
-          getPoints: () => zwiftquest.getWaypoints(1)
+          points: {
+            get: () => zwiftquest.getWaypoints(1)
+          }
         },
         2: {
           map: '/maps/zwiftquest/richmond.png',
           credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' },
-          getPoints: () => zwiftquest.getWaypoints(2)
+          points: {
+            get: () => zwiftquest.getWaypoints(2)
+          }
         },
         3: {
           map: '/maps/zwiftquest/london.png',
           credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' },
-          getPoints: () => zwiftquest.getWaypoints(3)
+          points: {
+            get: () => zwiftquest.getWaypoints(3)
+          }
+        }
+      },
+      goldrush: {
+        1: {
+          points: new GoldRush(1)
+        },
+        2: {
+          points: new GoldRush(2)
+        },
+        3: {
+          points: new GoldRush(3)
         }
       }
     }

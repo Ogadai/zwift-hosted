@@ -1,5 +1,8 @@
+const NodeCache = require('node-cache')
 const axios = require('axios')
 const mapLatLong = require('zwift-mobile-api/src/mapLatLong');
+
+const poiCache = new NodeCache({ stdTTL: 30 * 60, checkPeriod: 120, useClones: false });
 
 const rotations = {
   1: 90,
@@ -10,6 +13,20 @@ const rotations = {
 const WAYPOINTS_URL = 'http://zwiftquest.com/wp-content/uploads/2018/02/waypoints.txt';
 
 function getWaypoints(worldId) {
+  const cacheId = `zwiftquest-${worldId}`;
+  const cachedPoints = poiCache.get(cacheId);
+
+  if (cachedPoints) {
+    return Promise.resolve(cachedPoints);
+  } else {
+    return getFromZwiftQuest(worldId).then(points => {
+      poiCache.set(cacheId, points);
+      return points;
+    })
+  }
+}
+
+function getFromZwiftQuest(worldId) {
   return downloadQuest().then(quest => {
     if (worldId === quest.worldId) {
       const points = [
