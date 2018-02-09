@@ -21,8 +21,8 @@ module.exports = {
       viewBox: '-445000 -480000 847000 847000',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
       getPoints: () => Promise.resolve([
-        { name: 'Sprint Banner', x: 145912, y: -235695, image: 'sprint', rotate: 45 },
-        { name: 'Start Banner', x: -8764, y: 12332, image: 'start', rotate: 45 }
+        { name: 'Sprint Banner', x: 145912, y: -235695, image: 'sprint', rotate: 40 },
+        { name: 'Start Banner', x: -8764, y: 12332, image: 'start', rotate: 40 }
       ])
     },
     3: {
