@@ -39,7 +39,7 @@ class GoldRush {
 
   infoPanel() {
     const details = this.state.waiting
-      ? { prompt: 'Next game starts', time: this.state.nextTime }
+      ? { prompt: 'Game starts', time: this.state.nextTime }
       : { prompt: 'Game ends', time: this.state.nextTime }
 
     return {
@@ -71,9 +71,9 @@ class GoldRush {
   checkGameState() {
     const dateNow = new Date();
     const minutes = dateNow.getMinutes();
-    const waiting = minutes < 10;
+    const waiting = minutes < 5;
 
-    dateNow.setMinutes(waiting ? 10 : 0, 0, 0);
+    dateNow.setMinutes(waiting ? 5 : 0, 0, 0);
     if (!waiting) {
       dateNow.setHours(dateNow.getHours() + 1);
     }
