@@ -26,6 +26,17 @@ function getWaypoints(worldId) {
   }
 }
 
+function credit() {
+  return { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' };
+}
+
+function infoPanel() {
+  return {
+    details: credit(),
+    showWaypoints: true
+  };
+}
+
 function getFromZwiftQuest(worldId) {
   return downloadQuest().then(quest => {
     if (worldId === quest.worldId) {
@@ -75,5 +86,7 @@ function toLatLong(x, y) {
 }
 
 module.exports = {
-  getWaypoints
+  getWaypoints,
+  credit,
+  infoPanel
 };

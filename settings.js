@@ -48,23 +48,26 @@ module.exports = {
       zwiftquest: {
         1: {
           map: '/maps/zwiftquest/watopia.png',
-          credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' },
+          credit: zwiftquest.credit(),
           points: {
-            get: () => zwiftquest.getWaypoints(1)
+            get: () => zwiftquest.getWaypoints(1),
+            infoPanel: () => zwiftquest.infoPanel()
           }
         },
         2: {
           map: '/maps/zwiftquest/richmond.png',
-          credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' },
+          credit: zwiftquest.credit(),
           points: {
-            get: () => zwiftquest.getWaypoints(2)
+            get: () => zwiftquest.getWaypoints(2),
+            infoPanel: () => zwiftquest.infoPanel()
           }
         },
         3: {
           map: '/maps/zwiftquest/london.png',
-          credit: { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' },
+          credit: zwiftquest.credit(),
           points: {
-            get: () => zwiftquest.getWaypoints(3)
+            get: () => zwiftquest.getWaypoints(3),
+            infoPanel: () => zwiftquest.infoPanel()
           }
         }
       },

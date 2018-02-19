@@ -15,23 +15,81 @@ const counts = {
 
 const distance = (p1, p2) => Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 
+let coin_id = 1;
+
 class GoldRush {
   constructor(worldId) {
     this.worldId = worldId;
     this.roadPoints = null;
+
+    this.state = {};
     this.waypoints = [];
+    this.scores = [];
   }
 
   get() {
-    return this.checkWaypoints();
+    this.checkGameState();
+
+    if (this.state.waiting) {
+      return Promise.resolve([]);
+    } else {
+      return this.checkWaypoints();
+    }
+  }
+
+  infoPanel() {
+    const details = this.state.waiting
+      ? { prompt: 'Next game starts', time: this.state.nextTime }
+      : { prompt: 'Game ends', time: this.state.nextTime }
+
+    return {
+      details: details,
+      scores: this.scores
+    };
   }
 
   visited(point, rider, time) {
-    console.log(`${rider.id} visited ${point.name} at ${moment(time).format('MMMM Do YYYY, h:mm:ss a')}`);
     const index = this.waypoints.findIndex(p => p.x === point.x && p.y === point.y);
     if (index !== -1) {
+      const waypoint = this.waypoints[index];
       this.waypoints.splice(index, 1);
+
+      const score = this.scores.find(entry => entry.rider.id === rider.id);
+      if (score) {
+        score.score += waypoint.value;
+      } else {
+        this.scores.push({
+          rider: { id: rider.id, me: rider.me, firstName: rider.firstName, lastName: rider.lastName },
+          score: waypoint.value
+        })
+      }
+
+      this.scores.sort((a, b) => b.score - a.score);
     }
+  }
+
+  checkGameState() {
+    const dateNow = new Date();
+    const minutes = dateNow.getMinutes();
+    const waiting = minutes < 10;
+
+    dateNow.setMinutes(waiting ? 10 : 0, 0, 0);
+    if (!waiting) {
+      dateNow.setHours(dateNow.getHours() + 1);
+    }
+
+    if (!this.state.waiting && waiting) {
+      this.waypoints = [];
+    }
+    if (this.state.waiting && !waiting) {
+      this.scores = [];
+      this.roadPoints = null;
+    }
+
+    this.state = {
+      waiting,
+      nextTime: dateNow
+    };
   }
 
   checkWaypoints() {
@@ -43,12 +101,17 @@ class GoldRush {
               distance(roadPoints[index], waypoint) < 25000
             )) {
           const { x, y } = roadPoints[index];
+          const id = `Gold-${coin_id++}`;
+          const value = Math.random() < 0.333 ? 3 : 1;
+
           this.waypoints.push({
-            name: 'Gold',
+            name: id,
             x,
             y,
             rotate: rotations[this.worldId],
-            image: 'goldrush_3'
+            image: `goldrush_${value}`,
+            id,
+            value
           });
         }
       }
@@ -91,7 +154,7 @@ class GoldRush {
         .map(pair => {
           const coords = pair.split(',');
           if (coords.length === 2) {
-            return { x: coords[0], y: coords[1] };
+            return { x: parseFloat(coords[0]), y: parseFloat(coords[1]) };
           }
         })
         .filter(point => !!point);
