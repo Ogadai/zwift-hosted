@@ -59,7 +59,7 @@ class GoldRush {
         score.score += waypoint.value;
       } else {
         this.scores.push({
-          rider: { id: rider.id, me: rider.me, firstName: rider.firstName, lastName: rider.lastName },
+          rider: { id: rider.id, firstName: rider.firstName, lastName: rider.lastName },
           score: waypoint.value
         })
       }
