@@ -38,6 +38,10 @@ class GoldRush {
     }
   }
 
+  registerPlayer(rider) {
+    this.addPlayerScore(rider, 0);
+  }
+
   infoPanel() {
     const details = this.state.waiting
       ? { prompt: 'Game starts', time: this.state.nextTime }
@@ -55,18 +59,29 @@ class GoldRush {
       const waypoint = this.waypoints[index];
       this.waypoints.splice(index, 1);
 
-      const score = this.scores.find(entry => entry.rider.id === rider.id);
-      if (score) {
-        score.score += waypoint.value;
-      } else {
-        this.scores.push({
-          rider: { id: rider.id, firstName: rider.firstName, lastName: rider.lastName },
-          score: waypoint.value
-        })
-      }
+      this.addPlayerScore(rider, waypoint.value);
 
-      this.scores.sort((a, b) => b.score - a.score);
+      if (waypoint.image == 'goldrush_chest') {
+        // Spawn some new nearby waypoints
+        for(let n = 0; n < 4; n++) {
+          this.newWaypoint(5000, point => distance(point, waypoint) < 30000);
+        }
+      }
     }
+  }
+
+  addPlayerScore(rider, value) {
+    const score = this.scores.find(entry => entry.rider.id === rider.id);
+    if (score) {
+      score.score += value;
+    } else {
+      this.scores.push({
+        rider: { id: rider.id, firstName: rider.firstName, lastName: rider.lastName },
+        score: value
+      })
+    }
+
+    this.scores.sort((a, b) => b.score - a.score);
   }
 
   checkGameState() {
@@ -94,33 +109,47 @@ class GoldRush {
   }
 
   checkWaypoints() {
-    return this.getRoadPoints().then(roadPoints => {
+    return this.getRoadPoints().then(() => {
       while(this.waypoints.length < counts[this.worldId]) {
-        const index = Math.floor(Math.random() * roadPoints.length);
-
-        if (!this.waypoints.find(waypoint =>
-              distance(roadPoints[index], waypoint) < 25000
-            )) {
-          const { x, y, altitude } = roadPoints[index];
-          const id = `Gold-${coin_id++}`;
-
-          const altitudeRatio = Math.max(0.3, altitude / this.maxAltitude);
-          const value = Math.random() < (altitudeRatio * 0.6) ? 3 : 1;
-
-          this.waypoints.push({
-            name: id,
-            x,
-            y,
-            rotate: rotations[this.worldId],
-            image: `goldrush_${value}`,
-            id,
-            value
-          });
-        }
+        this.newWaypoint(25000);
       }
 
       return this.waypoints;
     })
+  }
+
+  newWaypoint(minDistance, pointsFilter) {
+    const roadPoints = pointsFilter
+        ? this.roadPoints.filter(pointsFilter)
+        : this.roadPoints;
+
+    let attempts = 0;
+    let added = false;
+    while (!added && attempts < 10) {
+      const index = Math.floor(Math.random() * roadPoints.length);
+      const roadPoint = roadPoints[index];
+
+      if (!this.waypoints.find(waypoint => distance(roadPoint, waypoint) < minDistance)) {
+        const { x, y, altitude } = roadPoint;
+        const id = `Gold-${coin_id++}`;
+
+        const altitudeRatio = Math.max(0.3, altitude / this.maxAltitude);
+        const isChest = pointsFilter ? false : Math.random() < (altitudeRatio * 0.1);
+        const value = isChest ? 0 : Math.random() < (altitudeRatio * 0.6) ? 3 : 1;
+
+        this.waypoints.push({
+          name: id,
+          x,
+          y,
+          rotate: rotations[this.worldId],
+          image: `goldrush_${isChest ? 'chest' : value}`,
+          id,
+          value
+        });
+        added = true;
+      }
+      attempts++;
+    }
   }
 
   getRoadPoints() {
