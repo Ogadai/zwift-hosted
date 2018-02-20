@@ -16,6 +16,9 @@ const counts = {
 const distance = (p1, p2) => Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 
 let coin_id = 1;
+let message_id = 1;
+
+const MESSAGE_DISPLAY_SECONDS = 20;
 
 class GoldRush {
   constructor(worldId) {
@@ -26,6 +29,7 @@ class GoldRush {
     this.state = {};
     this.waypoints = [];
     this.scores = [];
+    this.messages = [];
   }
 
   get() {
@@ -47,10 +51,24 @@ class GoldRush {
       ? { prompt: 'Game starts', time: this.state.nextTime }
       : { prompt: 'Game ends', time: this.state.nextTime }
 
+    this.removeOldMessages();
+    const messages = {
+      type: this.state.waiting ? 'banner' : 'list',
+      list: this.state.waiting ? this.getWinners() : this.messages
+    };
+
     return {
-      details: details,
+      details,
+      messages,
       scores: this.scores
     };
+  }
+
+  getWinners() {
+    const topScore = this.scores.reduce((max, entry) => Math.max(max, entry.score), 0);
+    return this.scores
+        .filter(entry => entry.score === topScore)
+        .map(entry => ({ id: `winner-${entry.rider.id}`, rider: entry.rider, text: `WINS!` }));
   }
 
   visited(point, rider, time) {
@@ -81,7 +99,20 @@ class GoldRush {
       })
     }
 
+    if (value > 0) {
+      this.messages.push({
+        id: message_id++,
+        rider,
+        text: `${value} point${value !== 1 ? 's' : ''}`,
+        time: new Date()
+      });
+    }
+
     this.scores.sort((a, b) => b.score - a.score);
+  }
+
+  removeOldMessages() {
+    this.messages = this.messages.filter(message => (new Date() - message.time) < MESSAGE_DISPLAY_SECONDS * 1000);
   }
 
   checkGameState() {
