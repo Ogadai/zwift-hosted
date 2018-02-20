@@ -21,6 +21,7 @@ class GoldRush {
   constructor(worldId) {
     this.worldId = worldId;
     this.roadPoints = null;
+    this.maxAltitude = 0;
 
     this.state = {};
     this.waypoints = [];
@@ -100,9 +101,11 @@ class GoldRush {
         if (!this.waypoints.find(waypoint =>
               distance(roadPoints[index], waypoint) < 25000
             )) {
-          const { x, y } = roadPoints[index];
+          const { x, y, altitude } = roadPoints[index];
           const id = `Gold-${coin_id++}`;
-          const value = Math.random() < 0.333 ? 3 : 1;
+
+          const altitudeRatio = Math.max(0.3, altitude / this.maxAltitude);
+          const value = Math.random() < (altitudeRatio * 0.6) ? 3 : 1;
 
           this.waypoints.push({
             name: id,
@@ -133,28 +136,49 @@ class GoldRush {
       while (index < svg.length && index !== -1) {
         index = svg.indexOf('<polyline ', index);
         if (index !== -1) {
-          index = svg.indexOf('points="', index);
-          if (index !== -1) {
-            const endIndex = svg.indexOf('"', index + 8);
-            if (endIndex !== -1) {
-              const polyline = svg.substring(index + 8, endIndex);
-              pointSets.push(this.pointsFromPolyline(polyline));
+          // Check for the points
+          const polyline = this.getAttribute(svg, index, 'points');
+          if (polyline) {
+            // Get the class
+            const className = this.getAttribute(svg, index, 'class') || '';
+            const classes = className.split(' ');
+            if (classes.find(c => c == 'roadsegment')) {
+              // See if there's an altitude
+              const altitudeClass = classes.find(c => c.startsWith('altitude_'));
+              const altitude = altitudeClass ? parseInt(altitudeClass.substring(9)) : 0;
+
+              pointSets.push(this.pointsFromPolyline(polyline, altitude));
             }
           }
+          index += 8;
         }
       }
 
       this.roadPoints = [].concat.apply([], pointSets);
+
+      this.maxAltitude = this.roadPoints.reduce((max, point) => Math.max(max, point.altitude), 0);
       return this.roadPoints;
     });
   }
 
-  pointsFromPolyline(polyline) {
+  getAttribute(elementStr, elementIndex, attributeName) {
+    const index = elementStr.indexOf(`${attributeName}="`, elementIndex);
+    if (index !== -1) {
+      const len = attributeName.length + 2;
+      const endIndex = elementStr.indexOf('"', index + len);
+      if (endIndex !== -1) {
+        return elementStr.substring(index + len, endIndex);
+      }
+    }
+    return null;
+  }
+
+  pointsFromPolyline(polyline, altitude) {
     return polyline.split(' ')
         .map(pair => {
           const coords = pair.split(',');
           if (coords.length === 2) {
-            return { x: parseFloat(coords[0]), y: parseFloat(coords[1]) };
+            return { x: parseFloat(coords[0]), y: parseFloat(coords[1]), altitude };
           }
         })
         .filter(point => !!point);
