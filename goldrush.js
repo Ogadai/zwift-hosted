@@ -1,5 +1,10 @@
-const Map = require('zwift-second-screen/server/map');
+const axios = require('axios')
 const moment = require('moment');
+
+const resultsUploadUrl = process.env.GoldRushPostResults;
+const resultsDownloadUrl = process.env.GoldRushGetResults;
+
+const Map = require('zwift-second-screen/server/map');
 
 const rotations = {
   1: 90,
@@ -109,6 +114,10 @@ class GoldRush {
     }
 
     this.scores.sort((a, b) => b.score - a.score);
+
+    if (this.scores.filter(s => s.score > 0).length > 1) {
+      this.uploadResults();
+    }
   }
 
   removeOldMessages() {
@@ -127,6 +136,7 @@ class GoldRush {
 
     if (!this.state.waiting && waiting) {
       this.waypoints = [];
+      this.uploadResults();
     }
     if (this.state.waiting && !waiting) {
       this.scores = [];
@@ -242,6 +252,17 @@ class GoldRush {
           }
         })
         .filter(point => !!point);
+  }
+
+  uploadResults() {
+    if (resultsUploadUrl && this.scores.find(s => s.score > 0)) {
+      const body = {
+        value1: JSON.stringify(this.scores)
+      };
+      axios.post(resultsUploadUrl, body).catch(function (error) {
+        console.log(error);
+      });
+    }
   }
 }
 
