@@ -142,6 +142,13 @@ class GoldRush {
       this.scores = [];
       this.roadPoints = null;
     }
+    if (!this.state.waiting && !waiting && this.state.nextTime
+        && this.state.nextTime.getHours() !== dateNow.getHours()) {
+      // Reset
+      this.waypoints = [];
+      this.scores = [];
+      this.roadPoints = null;
+    }
 
     this.state = {
       waiting,
