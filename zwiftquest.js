@@ -61,7 +61,8 @@ class ZwiftQuest {
 
     return {
       details: credit(),
-      scores
+      scores: scores.length > 0 ? scores : null,
+      showWaypoints: scores.length === 0
     };
   }
 
@@ -184,7 +185,7 @@ class Player {
 
   getScore() {
     return this.waypoints.reduce((score, waypoint) => {
-      return score + waypoint.visited ? 1 : 0;
+      return score + (waypoint.visited ? 1 : 0);
     }, 0);
   }
 }
