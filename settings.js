@@ -1,4 +1,4 @@
-﻿const zwiftquest = require('./zwiftquest');
+﻿const ZwiftQuest = require('./zwiftquest');
 const GoldRush = require('./goldrush');
 
 module.exports = {
@@ -48,27 +48,18 @@ module.exports = {
       zwiftquest: {
         1: {
           map: '/maps/zwiftquest/watopia.png',
-          credit: zwiftquest.credit(),
-          points: {
-            get: () => zwiftquest.getWaypoints(1),
-            infoPanel: () => zwiftquest.infoPanel()
-          }
+          credit: ZwiftQuest.credit(),
+          points: new ZwiftQuest(1)
         },
         2: {
           map: '/maps/zwiftquest/richmond.png',
-          credit: zwiftquest.credit(),
-          points: {
-            get: () => zwiftquest.getWaypoints(2),
-            infoPanel: () => zwiftquest.infoPanel()
-          }
+          credit: ZwiftQuest.credit(),
+          points: new ZwiftQuest(2)
         },
         3: {
           map: '/maps/zwiftquest/london.png',
-          credit: zwiftquest.credit(),
-          points: {
-            get: () => zwiftquest.getWaypoints(3),
-            infoPanel: () => zwiftquest.infoPanel()
-          }
+          credit: ZwiftQuest.credit(),
+          points: new ZwiftQuest(3)
         }
       },
       goldrush: {
