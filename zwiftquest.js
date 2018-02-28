@@ -35,6 +35,7 @@ class ZwiftQuest {
     this.events = null;
     this.eventIsPending = false;
 
+    this.lastRequestDate = null;
     this.lastPollDate = null;
   }
 
@@ -51,19 +52,11 @@ class ZwiftQuest {
   }
 
   get() {
-    const cacheId = `zwiftquest-${this.worldId}`;
-    const cachedPoints = poiCache.get(cacheId);
-
-    if (cachedPoints) {
-      this.updateState(cachedPoints);
-      return Promise.resolve(cachedPoints);
-    } else {
-      return this.getFromZwiftQuest().then(points => {
-        poiCache.set(cacheId, points);
-        this.updateState(points);
-        return points;
-      })
-    }
+    this.lastRequestDate = new Date();
+    return this.getWaypoints().then(points => {
+      this.triggerGameState();
+      return points;
+    });
   }
 
   infoPanel() {
@@ -100,6 +93,20 @@ class ZwiftQuest {
 
   credit() {
     return { prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' };
+  }
+
+  getWaypoints() {
+    const cacheId = `zwiftquest-${this.worldId}`;
+    const cachedPoints = poiCache.get(cacheId);
+
+    if (cachedPoints) {
+      return Promise.resolve(cachedPoints);
+    } else {
+      return this.getFromZwiftQuest().then(points => {
+        poiCache.set(cacheId, points);
+        return points;
+      })
+    }
   }
 
   getFromZwiftQuest() {
@@ -154,11 +161,17 @@ class ZwiftQuest {
     })
   }
 
-  updateState(points) {
+  triggerGameState() {
     if (!this.anonRider) return;
 
-    const currentDate = new Date();
-    if (!this.lastPollDate || (currentDate - this.lastPollDate) > 2500) {
+    if (!this.lastPollDate || (new Date() - this.lastPollDate) > 10000) {
+      this.updateState();
+    }
+  }
+
+  updateState() {
+    this.lastPollDate = new Date();
+    return this.getWaypoints().then(points => {
       this.checkPendingEvent();
 
       this.anonRider.getPositions().then(positions => {
@@ -177,10 +190,13 @@ class ZwiftQuest {
             player.updatePosition(position);
           }
         });
-      });
 
-      this.lastPollDate = currentDate;
-    }
+        if (this.lastRequestDate && (new Date() - this.lastRequestDate) < 1 * 60000) {
+          // Keeps going for 10 minutes
+          setTimeout(() => this.updateState(), 2500);
+        }
+      });
+    });
   }
 
   checkPendingEvent() {
