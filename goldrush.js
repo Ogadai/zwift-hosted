@@ -114,10 +114,6 @@ class GoldRush {
     }
 
     this.scores.sort((a, b) => b.score - a.score);
-
-    if (this.scores.filter(s => s.score > 0).length > 1) {
-      this.uploadResults();
-    }
   }
 
   removeOldMessages() {
