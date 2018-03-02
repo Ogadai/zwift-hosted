@@ -40,14 +40,18 @@ class ZwiftQuest {
   }
 
   initialiseRiderProvider(riderProvider) {
-    if (!this.anonRider && riderProvider.loginAnonymous) {
-      const result = riderProvider.loginAnonymous();
-      this.anonRider = riderProvider.getAnonymous(result.cookie);
-      this.anonRider.setFilter(`event:${EVENT_NAME}`);
-    }
+    try {
+      if (!this.anonRider && riderProvider.loginAnonymous) {
+        const result = riderProvider.loginAnonymous();
+        this.anonRider = riderProvider.getAnonymous(result.cookie);
+        this.anonRider.setFilter(`event:${EVENT_NAME}`);
+      }
 
-    if (riderProvider.account) {
-      this.events = new Events(riderProvider.account);
+      if (riderProvider.account) {
+        this.events = new Events(riderProvider.account);
+      }
+    } catch (ex) {
+      console.log(`ZwiftQuest: Exception initialising provider - ${errorMessage(ex)}`);
     }
   }
 
@@ -105,7 +109,9 @@ class ZwiftQuest {
       return this.getFromZwiftQuest().then(points => {
         poiCache.set(cacheId, points);
         return points;
-      })
+      }).catch(function (ex) {
+        console.log(`ZwiftQuest: Error getting ZwiftQuest waypoints - ${errorMessage(ex)}`);
+      });
     }
   }
 
@@ -195,6 +201,8 @@ class ZwiftQuest {
           // Keeps going for 10 minutes
           setTimeout(() => this.updateState(), 2500);
         }
+      }).catch(function (ex) {
+        console.log(`ZwiftQuest: Error getting updating rider positions - ${errorMessage(ex)}`);
       });
     });
   }
@@ -215,6 +223,8 @@ class ZwiftQuest {
         } else {
           this.eventIsPending = false;
         }
+      }).catch(function (ex) {
+        console.log(`ZwiftQuest: Error checking for ZwiftQuest events - ${errorMessage(ex)}`);
       });
     }
   }
@@ -295,6 +305,10 @@ class Player {
   }
 }
 
-const distance = (p1, p2) => Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+function errorMessage(ex) {
+  return (ex && ex.response && ex.response.status)
+      ? `- ${ex.response.status} (${ex.response.statusText})`
+      : ex.message;
+}
 
 module.exports = ZwiftQuest;
