@@ -52,21 +52,26 @@ class GoldRush {
   }
 
   infoPanel() {
-    const details = this.state.waiting
-      ? { prompt: 'Game starts', time: this.state.nextTime }
-      : { prompt: 'Game ends', time: this.state.nextTime }
+    try {
+      const details = this.state.waiting
+        ? { prompt: 'Game starts', time: this.state.nextTime }
+        : { prompt: 'Game ends', time: this.state.nextTime }
 
-    this.removeOldMessages();
-    const messages = {
-      type: this.state.waiting ? 'banner' : 'list',
-      list: this.state.waiting ? this.getWinners() : this.messages
-    };
+      this.removeOldMessages();
+      const messages = {
+        type: this.state.waiting ? 'banner' : 'list',
+        list: this.state.waiting ? this.getWinners() : this.messages
+      };
 
-    return {
-      details,
-      messages,
-      scores: this.scores
-    };
+      return {
+        details,
+        messages,
+        scores: this.scores
+      };
+    } catch (ex) {
+      console.log(`GoldRush: Exception getting info panel - ${errorMessage(ex)}`);
+      return {};
+    }
   }
 
   getWinners() {
@@ -77,43 +82,51 @@ class GoldRush {
   }
 
   visited(point, rider, time) {
-    const index = this.waypoints.findIndex(p => p.x === point.x && p.y === point.y);
-    if (index !== -1) {
-      const waypoint = this.waypoints[index];
-      this.waypoints.splice(index, 1);
+    try {
+      const index = this.waypoints.findIndex(p => p.x === point.x && p.y === point.y);
+      if (index !== -1) {
+        const waypoint = this.waypoints[index];
+        this.waypoints.splice(index, 1);
 
-      this.addPlayerScore(rider, waypoint.value);
+        this.addPlayerScore(rider, waypoint.value);
 
-      if (waypoint.image == 'goldrush_chest') {
-        // Spawn some new nearby waypoints
-        for(let n = 0; n < 4; n++) {
-          this.newWaypoint(5000, point => distance(point, waypoint) < 30000);
+        if (waypoint.image == 'goldrush_chest') {
+          // Spawn some new nearby waypoints
+          for(let n = 0; n < 4; n++) {
+            this.newWaypoint(5000, point => distance(point, waypoint) < 30000);
+          }
         }
       }
+    } catch (ex) {
+      console.log(`GoldRush: Exception marking point visited by ${rider.id} - ${errorMessage(ex)}`);
     }
   }
 
   addPlayerScore(rider, value) {
-    const score = this.scores.find(entry => entry.rider.id === rider.id);
-    if (score) {
-      score.score += value;
-    } else {
-      this.scores.push({
-        rider: { id: rider.id, firstName: rider.firstName, lastName: rider.lastName },
-        score: value
-      })
-    }
+    try {
+      const score = this.scores.find(entry => entry.rider.id === rider.id);
+      if (score) {
+        score.score += value;
+      } else {
+        this.scores.push({
+          rider: { id: rider.id, firstName: rider.firstName, lastName: rider.lastName },
+          score: value
+        })
+      }
 
-    if (value > 0) {
-      this.messages.push({
-        id: message_id++,
-        rider,
-        text: `${value} point${value !== 1 ? 's' : ''}`,
-        time: new Date()
-      });
-    }
+      if (value > 0) {
+        this.messages.push({
+          id: message_id++,
+          rider,
+          text: `${value} point${value !== 1 ? 's' : ''}`,
+          time: new Date()
+        });
+      }
 
-    this.scores.sort((a, b) => b.score - a.score);
+      this.scores.sort((a, b) => b.score - a.score);
+    } catch (ex) {
+      console.log(`GoldRush: Exception adding player score for ${rider.id} - ${errorMessage(ex)}`);
+    }
   }
 
   removeOldMessages() {
@@ -121,45 +134,54 @@ class GoldRush {
   }
 
   checkGameState() {
-    const dateNow = new Date();
-    const minutes = dateNow.getMinutes();
-    const waiting = minutes < 5;
+    try {
+      const dateNow = new Date();
+      const minutes = dateNow.getMinutes();
+      const waiting = minutes < 5;
 
-    dateNow.setMinutes(waiting ? 5 : 0, 0, 0);
-    if (!waiting) {
-      dateNow.setHours(dateNow.getHours() + 1);
-    }
+      dateNow.setMinutes(waiting ? 5 : 0, 0, 0);
+      if (!waiting) {
+        dateNow.setHours(dateNow.getHours() + 1);
+      }
 
-    if (!this.state.waiting && waiting) {
-      this.waypoints = [];
-      this.uploadResults();
-    }
-    if (this.state.waiting && !waiting) {
-      this.scores = [];
-      this.roadPoints = null;
-    }
-    if (!this.state.waiting && !waiting && this.state.nextTime
-        && this.state.nextTime.getHours() !== dateNow.getHours()) {
-      // Reset
-      this.waypoints = [];
-      this.scores = [];
-      this.roadPoints = null;
-    }
+      if (!this.state.waiting && waiting) {
+        this.waypoints = [];
+        this.uploadResults();
+      }
+      if (this.state.waiting && !waiting) {
+        this.scores = [];
+        this.roadPoints = null;
+      }
+      if (!this.state.waiting && !waiting && this.state.nextTime
+          && this.state.nextTime.getHours() !== dateNow.getHours()) {
+        // Reset
+        this.waypoints = [];
+        this.scores = [];
+        this.roadPoints = null;
+      }
 
-    this.state = {
-      waiting,
-      nextTime: dateNow
-    };
+      this.state = {
+        waiting,
+        nextTime: dateNow
+      };
+    } catch (ex) {
+      console.log(`GoldRush: Exception checking game state - ${errorMessage(ex)}`);
+    }
   }
 
   checkWaypoints() {
-    return this.getRoadPoints().then(() => {
-      while(this.waypoints.length < counts[this.worldId]) {
-        this.newWaypoint(25000);
-      }
+    return new Promise(resolve => {
+      this.getRoadPoints().then(() => {
+        while(this.waypoints.length < counts[this.worldId]) {
+          this.newWaypoint(25000);
+        }
 
-      return this.waypoints;
-    })
+        resolve(this.waypoints);
+      }).catch(ex => {
+        console.log(`Failed to check waypoints for world ${this.worldId}${errorMessage(ex)}`);
+        resolve(null);
+      });
+    });
   }
 
   newWaypoint(minDistance, pointsFilter) {
@@ -262,11 +284,18 @@ class GoldRush {
       const body = {
         value1: JSON.stringify(this.scores)
       };
-      axios.post(resultsUploadUrl, body).catch(function (error) {
-        console.log(error);
-      });
+      axios.post(resultsUploadUrl, body)
+          .catch(function (ex) {
+            console.log(`GoldRush: Error uploading results - ${errorMessage(ex)}`);
+          });
     }
   }
+}
+
+function errorMessage(ex) {
+  return (ex && ex.response && ex.response.status)
+      ? `- ${ex.response.status} (${ex.response.statusText})`
+      : ex.message;
 }
 
 module.exports = GoldRush;
