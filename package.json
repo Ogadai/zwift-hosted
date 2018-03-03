@@ -24,6 +24,6 @@
     "moment": "^2.20.1",
     "node-cache": "^4.1.1",
     "zwift-mobile-api": "latest",
-    "zwift-second-screen": "0.0.120"
+    "zwift-second-screen": "0.0.121"
   }
 }
