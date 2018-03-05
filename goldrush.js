@@ -5,6 +5,7 @@ const resultsUploadUrl = process.env.GoldRushPostResults;
 const resultsDownloadUrl = process.env.GoldRushGetResults;
 
 const Map = require('zwift-second-screen/server/map');
+const Store = require('./store');
 
 const rotations = {
   1: 90,
@@ -25,26 +26,31 @@ let message_id = 1;
 
 const MESSAGE_DISPLAY_SECONDS = 20;
 
+const STORE_KEYS = {
+  SCORES: 'GoldRush-CurrentScore',
+  TIME: 'GoldRush-SetupTime',
+  WAYPOINTS: 'GoldRush-Waypoints'
+}
+
 class GoldRush {
   constructor(worldId) {
+    this.store = new Store();
     this.worldId = worldId;
     this.roadPoints = null;
     this.maxAltitude = 0;
 
     this.state = {};
     this.waypoints = [];
-    this.scores = [];
+    this.scores = null;
     this.messages = [];
   }
 
   get() {
-    this.checkGameState();
+    return this.checkRestore().then(() => {
+      this.checkGameState();
 
-    if (this.state.waiting) {
-      return Promise.resolve([]);
-    } else {
       return this.checkWaypoints();
-    }
+    });
   }
 
   registerPlayer(rider) {
@@ -96,6 +102,7 @@ class GoldRush {
             this.newWaypoint(5000, point => distance(point, waypoint) < 30000);
           }
         }
+        this.saveWaypoints();
       }
     } catch (ex) {
       console.log(`GoldRush: Exception marking point visited by ${rider.id} - ${errorMessage(ex)}`);
@@ -124,6 +131,8 @@ class GoldRush {
       }
 
       this.scores.sort((a, b) => b.score - a.score);
+
+      this.saveScores();
     } catch (ex) {
       console.log(`GoldRush: Exception adding player score for ${rider.id} - ${errorMessage(ex)}`);
     }
@@ -149,14 +158,14 @@ class GoldRush {
         this.uploadResults();
       }
       if (this.state.waiting && !waiting) {
-        this.scores = [];
+        this.resetScores();
         this.roadPoints = null;
       }
       if (!this.state.waiting && !waiting && this.state.nextTime
           && this.state.nextTime.getHours() !== dateNow.getHours()) {
         // Reset
         this.waypoints = [];
-        this.scores = [];
+        this.resetScores();
         this.roadPoints = null;
       }
 
@@ -169,19 +178,81 @@ class GoldRush {
     }
   }
 
-  checkWaypoints() {
-    return new Promise(resolve => {
-      this.getRoadPoints().then(() => {
-        while(this.waypoints.length < counts[this.worldId]) {
-          this.newWaypoint(25000);
-        }
+  checkRestore() {
+    if (!this.scores) {
+      if (!this.restorePromise) {
+        this.restorePromise = Promise.all([
+          this.store.get(STORE_KEYS.SCORES),
+          this.store.get(STORE_KEYS.TIME),
+          this.store.get(STORE_KEYS.WAYPOINTS)
+        ]).then(([scores, time, waypoints]) => {
+          const getHoursFromTime = timeObj => {
+            if ( timeObj && timeObj.date ) {
+              return new Date(Date.parse(timeObj.date)).getHours()
+            }
+            return -1;
+          };
 
-        resolve(this.waypoints);
-      }).catch(ex => {
-        console.log(`Failed to check waypoints for world ${this.worldId}${errorMessage(ex)}`);
-        resolve(null);
+          if (!scores || (getHoursFromTime(time) !== (new Date()).getHours())) {
+            console.log('GoldRush: Resetting scores and waypoints after reset');
+            this.resetScores();
+          } else {
+            console.log('GoldRush: Restoring scores and waypoints after reset');
+
+            this.scores = scores;
+            if (waypoints) {
+              this.waypoints = waypoints;
+              coin_id = this.waypoints.reduce((max, point) => Math.max(max, parseInt(point.id.substring(5))), 0) + 1;
+            }
+          }
+
+          this.restorePromise = null;
+        }).catch(ex => {
+          console.log(`GoldRush: Error restoring scores and waypoints after reset - ${errorMessage(ex)}`);
+          this.resetScores();
+
+          this.restorePromise = null;
+        });
+      }
+
+      return this.restorePromise;
+    } else {
+      return Promise.resolve();
+    }
+  }
+
+  resetScores() {
+    this.scores = [];
+    this.saveScores();
+    this.store.set(STORE_KEYS.TIME, { date: new Date() });
+  }
+
+  saveScores() {
+    return this.store.set(STORE_KEYS.SCORES, this.scores);
+  }
+
+  saveWaypoints() {
+    return this.store.set(STORE_KEYS.WAYPOINTS, this.waypoints);
+  }
+
+  checkWaypoints() {
+    if (this.state.waiting) {
+      return Promise.resolve([]);
+    } else {
+      return new Promise(resolve => {
+        this.getRoadPoints().then(() => {
+          while(this.waypoints.length < counts[this.worldId]) {
+            this.newWaypoint(25000);
+          }
+
+          this.saveWaypoints();
+          resolve(this.waypoints);
+        }).catch(ex => {
+          console.log(`Failed to check waypoints for world ${this.worldId}${errorMessage(ex)}`);
+          resolve(null);
+        })
       });
-    });
+    }
   }
 
   newWaypoint(minDistance, pointsFilter) {

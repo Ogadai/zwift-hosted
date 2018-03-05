@@ -23,7 +23,8 @@
     "axios": "^0.17.1",
     "moment": "^2.20.1",
     "node-cache": "^4.1.1",
+    "redis": "^2.8.0",
     "zwift-mobile-api": "latest",
-    "zwift-second-screen": "0.0.121"
+    "zwift-second-screen": "0.0.122"
   }
 }

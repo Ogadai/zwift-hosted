@@ -5,6 +5,8 @@ const mapLatLong = require('zwift-mobile-api/src/mapLatLong');
 const { checkVisited } = require('zwift-second-screen/server/pointsOfInterest');
 const Events = require('zwift-second-screen/server/events');
 
+const Store = require('./store');
+
 const poiCache = new NodeCache({ stdTTL: 30 * 60, checkPeriod: 120, useClones: false });
 
 const playerCacheTimeout = 600 * 60;
@@ -27,8 +29,13 @@ const EVENT_NAME = 'zwiftquest';
 
 const credit = () => ({ prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' });
 
+const STORE_KEYS = {
+  STATE: 'ZwiftQuest-State'
+}
+
 class ZwiftQuest {
   constructor(worldId) {
+    this.store = new Store();
     this.worldId = worldId;
     this.anonRider = null;
     this.globalMessage = null;
@@ -57,10 +64,12 @@ class ZwiftQuest {
 
   get() {
     this.lastRequestDate = new Date();
-    return this.getWaypoints().then(points => {
-      this.triggerGameState();
-      return points;
-    });
+    return this.checkRestoreGameState().then(() =>
+      this.getWaypoints().then(points => {
+        this.triggerGameState();
+        return points;
+      })
+    );
   }
 
   infoPanel() {
@@ -181,6 +190,7 @@ class ZwiftQuest {
       this.checkPendingEvent();
 
       this.anonRider.getPositions().then(positions => {
+        let scoreChanged = false;
         positions.forEach(position => {
           const cacheId = `world-${this.worldId}-player-${position.id}`;
           let player = playerCache.get(cacheId);
@@ -193,9 +203,15 @@ class ZwiftQuest {
 
           player.refreshWaypoints(points);
           if (!this.eventIsPending) {
-            player.updatePosition(position);
+            if (player.updatePosition(position)) {
+              scoreChanged = true;
+            }
           }
         });
+
+        if (scoreChanged) {
+          this.triggerStoreGameState();
+        }
 
         if (this.lastRequestDate && (new Date() - this.lastRequestDate) < 1 * 60000) {
           // Keeps going for 10 minutes
@@ -205,6 +221,63 @@ class ZwiftQuest {
         console.log(`ZwiftQuest: Error getting updating rider positions - ${errorMessage(ex)}`);
       });
     });
+  }
+
+  checkRestoreGameState() {
+    if (!this.lastPollDate) {
+      if (!this.restorePromise) {
+        this.restorePromise = this.store.get(STORE_KEYS.STATE).then(state => {
+          const stateDate = (state && state.date) ? new Date(Date.parse(state.date)) : null;
+          // Within the last hour
+          if (stateDate && state.players && (new Date() - stateDate < 60 * 60 * 1000)) {
+            state.players.forEach(stored => {
+              const player = new Player(stored.rider);
+              player.waypoints = stored.waypoints;
+              player.lastScore = stored.lastScore;
+
+              const cacheId = `world-${this.worldId}-player-${stored.rider.id}`;
+              playerCache.set(cacheId, player);
+            });
+            console.log(`ZwiftQuest: Restored scores after reset`);
+          } else {
+            console.log(`ZwiftQuest: Reset scores after reset`);
+          }
+
+          this.restorePromise = null;
+        }).catch(ex => {
+          console.log(`ZwiftQuest: Error restoring scores after reset - ${errorMessage(ex)}`);
+          this.restorePromise = null;
+        });
+      }
+
+      return this.restorePromise;
+    }
+    return Promise.resolve();
+  }
+
+  triggerStoreGameState() {
+    if (!this.storeTimer) {
+      this.storeTimer = setTimeout(() => {
+        // Persist player info
+        const players = playerCache.keys()
+          .map(key => playerCache.get(key))
+          .filter(player => player.hasStarted())
+          .map(player => ({
+            rider: { id: player.id, firstName: player.firstName, lastName: player.lastName },
+            waypoints: player.waypoints,
+            lastScore: player.lastScore
+          }));
+
+        const state = {
+          players,
+          date: new Date()
+        };
+
+        this.store.set(STORE_KEYS.STATE, this.waypoints);
+
+        this.storeTimer = null;
+      }, 10000);
+    }
   }
 
   checkPendingEvent() {
@@ -248,6 +321,7 @@ class Player {
   }
 
   updatePosition(position) {
+    let scored = false;
     if (this.positions.length === 0
         || this.positions[this.positions.length - 1].x != position.x
         || this.positions[this.positions.length - 1].y != position.y ) {
@@ -258,6 +332,7 @@ class Player {
           if (pointVisited && pointVisited.visited) {
             point.visited = true;
             this.lastScore = pointVisited.time;
+            scored = true;
           }
         }
       });
@@ -267,6 +342,7 @@ class Player {
         this.positions.splice(0, 1);
       }
     }
+    return scored;
   }
 
   waypointEnabled(point) {
