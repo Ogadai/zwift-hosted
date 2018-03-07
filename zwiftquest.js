@@ -9,7 +9,7 @@ const Store = require('./store');
 
 const poiCache = new NodeCache({ stdTTL: 30 * 60, checkPeriod: 120, useClones: false });
 
-const playerCacheTimeout = 600 * 60;
+const playerCacheTimeout = 30 * 60;
 const playerCache = new NodeCache({ stdTTL: playerCacheTimeout, checkPeriod: 120, useClones: false });
 
 const rotations = {
@@ -25,6 +25,7 @@ const world_names = {
 
 const WAYPOINTS_URL = process.env.ZwiftQuestWaypoints
     || 'http://zwiftquest.com/wp-content/uploads/2018/02/waypoints.txt';
+
 const EVENT_NAME = 'zwiftquest';
 
 const credit = () => ({ prompt: 'Event details at', name: 'ZwiftQuest', href: 'http://zwiftquest.com/' });
@@ -64,44 +65,54 @@ class ZwiftQuest {
 
   get() {
     this.lastRequestDate = new Date();
-    return this.checkRestoreGameState().then(() =>
-      this.getWaypoints().then(points => {
-        this.triggerGameState();
-        return points;
-      })
-    );
+    return new Promise(resolve => {
+      this.checkRestoreGameState().then(() =>
+        this.getWaypoints().then(points => {
+          this.triggerGameState();
+          resolve(points);
+        })
+      ).catch(function (ex) {
+        console.log(`ZwiftQuest: Error getting rider waypoints - ${errorMessage(ex)}`);
+        resolve([]);
+      });
+    });
   }
 
   infoPanel() {
-    const scores = playerCache.keys()
-        .map(key => playerCache.get(key))
-        .filter(player => player.hasStarted())
-        .map(player => ({
-          rider: { id: player.id, firstName: player.firstName, lastName: player.lastName },
-          score: player.getScore(),
-          lastScore: player.lastScore
-        }));
-    scores.sort((a, b) => {
-      const result = b.score - a.score;
-      if (result === 0) {
-        return a.lastScore - b.lastScore;
-      }
-      return result;
-    });
+    try {
+      const scores = playerCache.keys()
+          .map(key => playerCache.get(key))
+          .filter(player => player.hasStarted())
+          .map(player => ({
+            rider: { id: player.id, firstName: player.firstName, lastName: player.lastName },
+            score: player.getScore(),
+            lastScore: player.lastScore
+          }));
+      scores.sort((a, b) => {
+        const result = b.score - a.score;
+        if (result === 0) {
+          return a.lastScore - b.lastScore;
+        }
+        return result;
+      });
 
-    const messages = this.globalMessage ? {
-      type: 'banner',
-      list: [
-        { text: this.globalMessage }
-      ]
-    } : null;
+      const messages = this.globalMessage ? {
+        type: 'banner',
+        list: [
+          { text: this.globalMessage }
+        ]
+      } : null;
 
-    return {
-      details: credit(),
-      scores: scores.length > 0 ? scores : null,
-      showWaypoints: scores.length === 0,
-      messages
-    };
+      return {
+        details: credit(),
+        scores: scores.length > 0 ? scores : null,
+        showWaypoints: scores.length === 0,
+        messages
+      };
+    } catch (ex) {
+      console.log(`ZwiftQuest: Exception getting info panel - ${errorMessage(ex)}`);
+      return {details: credit(), showWaypoints: true};
+    }
   }
 
   credit() {
@@ -233,7 +244,7 @@ class ZwiftQuest {
             state.players.forEach(stored => {
               const player = new Player(stored.rider);
               player.waypoints = stored.waypoints;
-              player.lastScore = stored.lastScore;
+              player.lastScore = new Date(Date.parse(stored.lastScore));
 
               const cacheId = `world-${this.worldId}-player-${stored.rider.id}`;
               playerCache.set(cacheId, player);
@@ -258,22 +269,29 @@ class ZwiftQuest {
   triggerStoreGameState() {
     if (!this.storeTimer) {
       this.storeTimer = setTimeout(() => {
-        // Persist player info
-        const players = playerCache.keys()
-          .map(key => playerCache.get(key))
-          .filter(player => player.hasStarted())
-          .map(player => ({
-            rider: { id: player.id, firstName: player.firstName, lastName: player.lastName },
-            waypoints: player.waypoints,
-            lastScore: player.lastScore
-          }));
+        try {
+          // Persist player info
+          const players = playerCache.keys()
+            .map(key => playerCache.get(key))
+            .filter(player => player.hasStarted())
+            .map(player => ({
+              rider: { id: player.id, firstName: player.firstName, lastName: player.lastName },
+              waypoints: player.waypoints,
+              lastScore: player.lastScore
+            }));
 
-        const state = {
-          players,
-          date: new Date()
-        };
+          const state = {
+            players,
+            date: new Date()
+          };
 
-        this.store.set(STORE_KEYS.STATE, this.waypoints);
+          this.store.set(STORE_KEYS.STATE, state)
+              .catch(ex => {
+                console.log(`ZwiftQuest: Error saving game state to store - ${errorMessage(ex)}`);
+              });
+        } catch (ex) {
+          console.log(`ZwiftQuest: Exception storing game state - ${errorMessage(ex)}`);
+        }
 
         this.storeTimer = null;
       }, 10000);

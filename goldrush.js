@@ -224,15 +224,24 @@ class GoldRush {
   resetScores() {
     this.scores = [];
     this.saveScores();
-    this.store.set(STORE_KEYS.TIME, { date: new Date() });
+    this.store.set(STORE_KEYS.TIME, { date: new Date() })
+        .catch(ex => {
+          console.log(`GoldRush: Error saving time to store - ${errorMessage(ex)}`);
+        });
   }
 
   saveScores() {
-    return this.store.set(STORE_KEYS.SCORES, this.scores);
+    return this.store.set(STORE_KEYS.SCORES, this.scores)
+        .catch(ex => {
+          console.log(`GoldRush: Error saving scores to store - ${errorMessage(ex)}`);
+        });
   }
 
   saveWaypoints() {
-    return this.store.set(STORE_KEYS.WAYPOINTS, this.waypoints);
+    return this.store.set(STORE_KEYS.WAYPOINTS, this.waypoints)
+        .catch(ex => {
+          console.log(`GoldRush: Error saving waypoints to store - ${errorMessage(ex)}`);
+        });
   }
 
   checkWaypoints() {
