@@ -250,11 +250,14 @@ class GoldRush {
     } else {
       return new Promise(resolve => {
         this.getRoadPoints().then(() => {
-          while(this.waypoints.length < counts[this.worldId]) {
-            this.newWaypoint(25000);
+          if (this.waypoints.length < counts[this.worldId]) {
+            while(this.waypoints.length < counts[this.worldId]) {
+              this.newWaypoint(25000);
+            }
+
+            this.saveWaypoints();
           }
 
-          this.saveWaypoints();
           resolve(this.waypoints);
         }).catch(ex => {
           console.log(`Failed to check waypoints for world ${this.worldId}${errorMessage(ex)}`);
