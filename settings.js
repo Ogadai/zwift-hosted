@@ -6,7 +6,7 @@ module.exports = {
     1: {
       map: '/maps/watopia.png',
       background: '#0886E4',
-      viewBox: '-625000 -395000 847000 847000',
+      viewBox: '-217000 -801000 847000 847000',
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
       points: {
         get: () => Promise.resolve([
