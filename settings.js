@@ -5,8 +5,11 @@ module.exports = {
   worlds: {
     1: {
       map: '/maps/watopia.png',
+//      roads: '/maps/watopia-roads.json',
       background: '#0886E4',
       viewBox: '-641000 -801000 1270000 847000',
+      rotate: "(-90,122141,234864)",
+      translate: "(949427,295876)",
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
       points: {
         get: () => Promise.resolve([
@@ -22,6 +25,8 @@ module.exports = {
       map: '/maps/richmond.png',
       background: '#B9B9B9',
       viewBox: '-445000 -480000 847000 847000',
+      rotate: "(-90,170389,190060)",
+      translate: "(457062,36315)",
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
       points: {
         get: () => Promise.resolve([
@@ -32,8 +37,11 @@ module.exports = {
     },
     3: {
       map: '/maps/london.png',
+      roads: '/maps/london-roads.json',
       background: '#7C9938',
       viewBox: '-67500 -383000 847000 847000',
+      rotate: "(0,0,0)",
+      translate: "(0,0)",
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
       points: {
         get: () => Promise.resolve([

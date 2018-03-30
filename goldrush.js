@@ -14,9 +14,9 @@ const rotations = {
 };
 
 const counts = {
-  1: 30,
+  1: 40,
   2: 10,
-  3: 20
+  3: 25
 };
 
 const distance = (p1, p2) => Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
