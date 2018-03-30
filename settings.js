@@ -5,7 +5,7 @@ module.exports = {
   worlds: {
     1: {
       map: '/maps/watopia.png',
-//      roads: '/maps/watopia-roads.json',
+      roads: '/maps/watopia-roads.json',
       background: '#0886E4',
       viewBox: '-641000 -801000 1270000 847000',
       rotate: "(-90,122141,234864)",
