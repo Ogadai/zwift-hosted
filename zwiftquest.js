@@ -6,6 +6,7 @@ const { checkVisited } = require('zwift-second-screen/server/pointsOfInterest');
 const Events = require('zwift-second-screen/server/events');
 
 const Store = require('./store');
+const { errorMessage } = require('./game/error');
 
 const poiCache = new NodeCache({ stdTTL: 30 * 60, checkPeriod: 120, useClones: false });
 
@@ -397,12 +398,6 @@ class Player {
       return score + ((waypoint.role !== 'start' && waypoint.visited) ? 1 : 0);
     }, 0);
   }
-}
-
-function errorMessage(ex) {
-  return (ex && ex.response && ex.response.status)
-      ? `- ${ex.response.status} (${ex.response.statusText})`
-      : ex.message;
 }
 
 module.exports = ZwiftQuest;

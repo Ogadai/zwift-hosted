@@ -6,6 +6,7 @@ const resultsDownloadUrl = process.env.GoldRushGetResults;
 
 const Map = require('zwift-second-screen/server/map');
 const Store = require('./store');
+const { errorMessage } = require('./game/error');
 
 const rotations = {
   1: 90,
@@ -39,6 +40,11 @@ class GoldRush {
     this.roadPoints = null;
     this.maxAltitude = 0;
 
+    this.teams = [
+      { name: 'Blues', colour: 'blue' },
+      { name: 'Reds', colour: 'red' }
+    ];
+
     this.state = {};
     this.waypoints = [];
     this.scores = null;
@@ -57,6 +63,29 @@ class GoldRush {
     this.addPlayerScore(rider, 0);
   }
 
+  modifyPositions(positions) {
+    if (!this.isTeamGame()) {
+      return positions;
+    }
+
+    return positions.map(p => {
+      const score = this.scores.find(s => s.rider.id === p.id);
+      if (score) {
+        const team = this.teams.find(t => t.name === score.team);
+        if (team) {
+          return Object.assign({}, p, {
+            colour: team.colour
+          });
+        }
+      }
+      return p;
+    });
+  }
+
+  isTeamGame() {
+    return this.scores && (this.scores.length > 3);
+  }
+
   infoPanel() {
     try {
       const details = this.state.waiting
@@ -72,7 +101,7 @@ class GoldRush {
       return {
         details,
         messages,
-        scores: this.scores
+        scores: this.displayScores()
       };
     } catch (ex) {
       console.log(`GoldRush: Exception getting info panel - ${errorMessage(ex)}`);
@@ -80,11 +109,34 @@ class GoldRush {
     }
   }
 
+  displayScores() {
+    if (!this.isTeamGame()) {
+      return this.scores;
+    }
+    return this.teams.map(t => this.countPlayersInTeam(t));
+  }
+
   getWinners() {
-    const topScore = this.scores.reduce((max, entry) => Math.max(max, entry.score), 0);
-    return this.scores
+    if (!this.isTeamGame()) {
+      const topScore = this.scores.reduce((max, entry) => Math.max(max, entry.score), 0);
+      return this.scores
         .filter(entry => entry.score === topScore)
         .map(entry => ({ id: `winner-${entry.rider.id}`, rider: entry.rider, text: `WINS!` }));
+    } else {
+      const teamScores = this.teams.map(t => this.countPlayersInTeam(t));
+      const topScore = teamScores.reduce((max, entry) => Math.max(max, entry.score), 0);
+      const winningTeams = teamScores.filter(entry => entry.score === topScore)
+
+      if (winningTeams.length === 1) {
+        return [
+          { text: `${winningTeams[0].name} WIN!` }
+        ];
+      } else {
+        return [
+          { text: `${winningTeams.map(t => t.name).join(' and ')} DRAW!` }
+        ];
+      }
+    }
   }
 
   visited(point, rider, time) {
@@ -117,7 +169,8 @@ class GoldRush {
       } else {
         this.scores.push({
           rider: { id: rider.id, firstName: rider.firstName, lastName: rider.lastName },
-          score: value
+          score: value,
+          team: this.getTeamForNewPlayer()
         })
       }
 
@@ -136,6 +189,39 @@ class GoldRush {
     } catch (ex) {
       console.log(`GoldRush: Exception adding player score for ${rider.id} - ${errorMessage(ex)}`);
     }
+  }
+
+  countPlayersInTeam(team) {
+    return this.scores.reduce((total, score) => {
+      if (score.team === team.name) {
+        return {
+          name: total.name,
+          colour: total.colour,
+          count: total.count + 1,
+          score: total.score + score.score,
+          scores: total.scores.concat([score])
+        };
+      }
+      return total;
+    }, { name: team.name, colour: team.colour, count: 0, score: 0, scores: [] });
+  }
+
+  getTeamForNewPlayer() {
+    if (this.teams.length < 2) {
+      return null;
+    }
+
+    const counts = this.teams.map(t => this.countPlayersInTeam(t));
+
+    counts.sort((c1, c2) => {
+      const diff = c1.count - c2.count;
+      if (diff === 0) {
+        return c1.score - c2.score;
+      }
+      return diff;
+    });
+
+    return counts[0].name;
   }
 
   removeOldMessages() {
@@ -373,12 +459,6 @@ class GoldRush {
           });
     }
   }
-}
-
-function errorMessage(ex) {
-  return (ex && ex.response && ex.response.status)
-      ? `- ${ex.response.status} (${ex.response.statusText})`
-      : ex.message;
 }
 
 module.exports = GoldRush;
