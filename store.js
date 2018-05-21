@@ -1,7 +1,8 @@
 const redis = require("redis");
 
 class Store {
-  constructor() {
+  constructor(prefix) {
+    this.prefix = prefix;
     if (process.env.REDIS_URL) {
       this.redis = redis.createClient(process.env.REDIS_URL);
     } else {
@@ -11,7 +12,7 @@ class Store {
 
   get(key) {
     return new Promise((resolve, reject) => {
-      this.redis.get(key, (err, res) => {
+      this.redis.get(this.key(key), (err, res) => {
         if (err) {
           reject(err);
         } else {
@@ -28,7 +29,7 @@ class Store {
   }
   set(key, value) {
     return new Promise((resolve, reject) => {
-      this.redis.set(key, JSON.stringify(value), (err, res) => {
+      this.redis.set(this.key(key), JSON.stringify(value), (err, res) => {
         if (err) {
           reject(err);
         } else {
@@ -36,6 +37,12 @@ class Store {
         }
       });
     });
+  }
+  key(key) {
+    if (this.prefix) {
+      return `${this.prefix}-${key}`;
+    }
+    return key;
   }
 }
 module.exports = Store;

@@ -72,13 +72,13 @@ module.exports = {
       },
       goldrush: {
         1: {
-          points: new GoldRush(1)
+          points: (...params) => new GoldRush(1, ...params)
         },
         2: {
-          points: new GoldRush(2)
+          points: (...params) => new GoldRush(2, ...params)
         },
         3: {
-          points: new GoldRush(3)
+          points: (...params) => new GoldRush(3, ...params)
         }
       }
     }

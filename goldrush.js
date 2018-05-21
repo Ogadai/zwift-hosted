@@ -30,20 +30,29 @@ const MESSAGE_DISPLAY_SECONDS = 20;
 const STORE_KEYS = {
   SCORES: 'GoldRush-CurrentScore',
   TIME: 'GoldRush-SetupTime',
-  WAYPOINTS: 'GoldRush-Waypoints'
+  WAYPOINTS: 'GoldRush-Waypoints',
+  TEAMS: 'GoldRush-Teams'
 }
 
+const TEAM_LIST = [
+  { name: 'Blue', colour: 'blue', match: /blue/ },
+  { name: 'Red', colour: 'red', match: /red/ },
+  { name: 'Green', colour: 'green', match: /green/ },
+  { name: 'Orange', colour: 'orange', match: /orange/ },
+  { name: 'Purple', colour: 'purple', match: /purple/ },
+  { name: 'Yellow', colour: 'yellow', match: /yellow/ }
+];
+
 class GoldRush {
-  constructor(worldId) {
-    this.store = new Store();
+  constructor(worldId, code, team) {
+    this.store = new Store(code);
     this.worldId = worldId;
     this.roadPoints = null;
     this.maxAltitude = 0;
 
-    this.teams = [
-      { name: 'Blues', colour: 'blue' },
-      { name: 'Reds', colour: 'red' }
-    ];
+    this.forceTeams = (team && team.length > 0);
+    this.teams = [];
+    this.sourceTeams = TEAM_LIST.slice(0);
 
     this.state = {};
     this.waypoints = [];
@@ -59,8 +68,21 @@ class GoldRush {
     });
   }
 
-  registerPlayer(rider) {
-    this.addPlayerScore(rider, 0);
+  registerPlayer(rider, eventName, code, team) {
+    try {
+      const score = this.scores.find(entry => entry.rider.id === rider.id);
+      if (!score) {
+        this.scores.push({
+          rider: { id: rider.id, firstName: rider.firstName, lastName: rider.lastName },
+          score: 0,
+          team: this.getTeamForNewPlayer(team)
+        });
+
+        this.saveScores();
+      }
+    } catch (ex) {
+      console.log(`GoldRush: Exception registering player ${rider.id} - ${errorMessage(ex)}`);
+    }
   }
 
   modifyPositions(positions) {
@@ -83,7 +105,7 @@ class GoldRush {
   }
 
   isTeamGame() {
-    return this.scores && (this.scores.length > 3);
+    return this.forceTeams || (this.scores && (this.scores.length > 3));
   }
 
   infoPanel() {
@@ -166,26 +188,19 @@ class GoldRush {
       const score = this.scores.find(entry => entry.rider.id === rider.id);
       if (score) {
         score.score += value;
-      } else {
-        this.scores.push({
-          rider: { id: rider.id, firstName: rider.firstName, lastName: rider.lastName },
-          score: value,
-          team: this.getTeamForNewPlayer()
-        })
+
+        if (value > 0) {
+          this.messages.push({
+            id: message_id++,
+            rider,
+            text: `${value} point${value !== 1 ? 's' : ''}`,
+            time: new Date()
+          });
+        }
+
+        this.scores.sort((a, b) => b.score - a.score);
+        this.saveScores();
       }
-
-      if (value > 0) {
-        this.messages.push({
-          id: message_id++,
-          rider,
-          text: `${value} point${value !== 1 ? 's' : ''}`,
-          time: new Date()
-        });
-      }
-
-      this.scores.sort((a, b) => b.score - a.score);
-
-      this.saveScores();
     } catch (ex) {
       console.log(`GoldRush: Exception adding player score for ${rider.id} - ${errorMessage(ex)}`);
     }
@@ -206,22 +221,43 @@ class GoldRush {
     }, { name: team.name, colour: team.colour, count: 0, score: 0, scores: [] });
   }
 
-  getTeamForNewPlayer() {
-    if (this.teams.length < 2) {
-      return null;
-    }
-
-    const counts = this.teams.map(t => this.countPlayersInTeam(t));
-
-    counts.sort((c1, c2) => {
-      const diff = c1.count - c2.count;
-      if (diff === 0) {
-        return c1.score - c2.score;
+  getTeamForNewPlayer(team) {
+    if (team && team.length > 0) {
+      // Specified team name
+      if (!this.teams.find(t => t.name.toLowerCase().localeCompare(team.toLowerCase()) === 0)) {
+        // New team name
+        if (this.sourceTeams.length > 0) {
+          // Use source team colour
+          const matchTeam = this.sourceTeams.find(t => t.match.test(team.toLowerCase()));
+          const useTeam = matchTeam || this.sourceTeams[0];
+          this.teams.push(Object.assign({}, useTeam, { name: team }));
+          this.sourceTeams = this.sourceTeams.filter(t => t.name !== useTeam.name);
+        } else {
+          // No teams left
+          this.teams.push({ name: team });
+        }
       }
-      return diff;
-    });
 
-    return counts[0].name;
+      return team;
+    } else {
+      // Auto-assign to team
+      if (this.teams.length < 2) {
+        // Add the next team
+        this.teams.push(this.sourceTeams[0]);
+        this.sourceTeams = this.sourceTeams.slice(1);
+      }
+
+      const counts = this.teams.map(t => this.countPlayersInTeam(t));
+      counts.sort((c1, c2) => {
+        const diff = c1.count - c2.count;
+        if (diff === 0) {
+          return c1.score - c2.score;
+        }
+        return diff;
+      });
+  
+      return counts[0].name;
+    }
   }
 
   removeOldMessages() {
@@ -270,8 +306,9 @@ class GoldRush {
         this.restorePromise = Promise.all([
           this.store.get(STORE_KEYS.SCORES),
           this.store.get(STORE_KEYS.TIME),
-          this.store.get(STORE_KEYS.WAYPOINTS)
-        ]).then(([scores, time, waypoints]) => {
+          this.store.get(STORE_KEYS.WAYPOINTS),
+          this.store.get(STORE_KEYS.TEAMS)
+        ]).then(([scores, time, waypoints, teams]) => {
           const getHoursFromTime = timeObj => {
             if ( timeObj && timeObj.date ) {
               return new Date(Date.parse(timeObj.date)).getHours()
@@ -286,6 +323,7 @@ class GoldRush {
             console.log('GoldRush: Restoring scores and waypoints after reset');
 
             this.scores = scores;
+            this.teams = teams || [];
             if (waypoints) {
               this.waypoints = waypoints;
               coin_id = this.waypoints.reduce((max, point) => Math.max(max, parseInt(point.id.substring(5))), 0) + 1;
@@ -309,18 +347,21 @@ class GoldRush {
 
   resetScores() {
     this.scores = [];
+    this.teams = [];
     this.saveScores();
     this.store.set(STORE_KEYS.TIME, { date: new Date() })
-        .catch(ex => {
-          console.log(`GoldRush: Error saving time to store - ${errorMessage(ex)}`);
-        });
+      .catch(ex => {
+        console.log(`GoldRush: Error saving time to store - ${errorMessage(ex)}`);
+      });
   }
 
   saveScores() {
-    return this.store.set(STORE_KEYS.SCORES, this.scores)
-        .catch(ex => {
-          console.log(`GoldRush: Error saving scores to store - ${errorMessage(ex)}`);
-        });
+    return Promise.all([
+      this.store.set(STORE_KEYS.SCORES, this.scores),
+      this.store.set(STORE_KEYS.TEAMS, this.teams)
+    ]).catch(ex => {
+      console.log(`GoldRush: Error saving scores to store - ${errorMessage(ex)}`);
+    });
   }
 
   saveWaypoints() {
