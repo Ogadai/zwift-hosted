@@ -99,7 +99,8 @@ module.exports = {
     static: {
       route: '/maps',
       path: `${__dirname}/maps`
-    }
+    },
+    offline: `${__dirname}/offline.html`
   },
   strava: {
     // http://zwiftblog.com/verified-zwift-strava-segments/
