@@ -1,5 +1,4 @@
 const axios = require('axios')
-const moment = require('moment');
 
 const resultsUploadUrl = process.env.GoldRushPostResults;
 const resultsDownloadUrl = process.env.GoldRushGetResults;
