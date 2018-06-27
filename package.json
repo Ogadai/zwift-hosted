@@ -26,6 +26,6 @@
     "redis": "^2.8.0",
     "strava-live-segments": "0.0.14",
     "zwift-mobile-api": "0.3.11",
-    "zwift-second-screen": "0.1.10"
+    "zwift-second-screen": "0.1.11"
   }
 }
