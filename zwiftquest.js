@@ -5,7 +5,7 @@ const mapLatLong = require('zwift-mobile-api/src/mapLatLong');
 const { checkVisited } = require('zwift-second-screen/server/pointsOfInterest');
 const Events = require('zwift-second-screen/server/events');
 
-const Store = require('./store');
+const Store = require('zwift-second-screen/server/store');
 const { errorMessage } = require('./game/error');
 
 const poiCache = new NodeCache({ stdTTL: 30 * 60, checkPeriod: 120, useClones: false });
@@ -37,7 +37,7 @@ const STORE_KEYS = {
 
 class ZwiftQuest {
   constructor(worldId) {
-    this.store = new Store();
+    this.store = new Store({ ttl: 60 * 60, name: 'zwiftquest' });
     this.worldId = worldId;
     this.anonRider = null;
     this.globalMessage = null;
