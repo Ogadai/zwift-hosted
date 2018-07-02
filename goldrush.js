@@ -25,9 +25,9 @@ const MESSAGE_DISPLAY_SECONDS = 20;
 
 const STORE_KEYS = {
   SCORES: 'GoldRush-CurrentScore',
-  TIME: 'GoldRush-SetupTime',
   WAYPOINTS: 'GoldRush-Waypoints',
-  TEAMS: 'GoldRush-Teams'
+  TEAMS: 'GoldRush-Teams',
+  GAMESTATE: 'GoldRush-State'
 }
 
 const TEAM_LIST = [
@@ -267,12 +267,16 @@ class GoldRush {
     try {
       const dateNow = new Date();
       const minutes = dateNow.getMinutes();
-      const waiting = minutes < 5;
+      const hours = dateNow.getHours();
+      
+      const changeTime = 0;
+      const waiting = minutes >= changeTime && minutes < changeTime + 5;
 
-      dateNow.setMinutes(waiting ? 5 : 0, 0, 0);
-      if (!waiting) {
-        dateNow.setHours(dateNow.getHours() + 1);
-      }
+      const nextTime = new Date(
+        dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate(),
+        (waiting || minutes < changeTime) ? hours : hours + 1,
+        changeTime + (waiting ? 5 : 0)
+      );
 
       if (!this.state.waiting && waiting) {
         this.waypoints = [];
@@ -283,17 +287,21 @@ class GoldRush {
         this.roadPoints = null;
       }
       if (!this.state.waiting && !waiting && this.state.nextTime
-          && this.state.nextTime.getHours() !== dateNow.getHours()) {
+          && this.state.nextTime.getHours() !== nextTime.getHours()) {
         // Reset
         this.waypoints = [];
         this.resetScores();
         this.roadPoints = null;
       }
 
-      this.state = {
-        waiting,
-        nextTime: dateNow
-      };
+      if ((this.state.waiting !== waiting)
+        || (this.state.nextTime.getTime() !== nextTime.getTime())) {
+        this.state = {
+          waiting,
+          nextTime: nextTime
+        };
+        this.saveGameState();
+      }
     } catch (ex) {
       console.log(`GoldRush: Exception checking game state - ${errorMessage(ex)}`);
     }
@@ -301,24 +309,20 @@ class GoldRush {
 
   restoreState() {
     return Promise.all([
-      this.store.get(STORE_KEYS.SCORES),
-      this.store.get(STORE_KEYS.TIME),
-      this.store.get(STORE_KEYS.WAYPOINTS),
-      this.store.get(STORE_KEYS.TEAMS),
+      this.store.getMulti([STORE_KEYS.SCORES, STORE_KEYS.WAYPOINTS, STORE_KEYS.TEAMS, STORE_KEYS.GAMESTATE]),
       this.messageStore.getAll()
-    ]).then(([scores, time, waypoints, teams, messages]) => {
-      const getHoursFromTime = timeObj => {
-        if ( timeObj && timeObj.date ) {
-          return new Date(Date.parse(timeObj.date)).getHours()
-        }
-        return -1;
-      };
-
-      if (!scores || (getHoursFromTime(time) !== (new Date()).getHours())) {
+    ]).then(([multiValues, messages]) => {
+      const [scores, waypoints, teams, gameState] = multiValues;
+      if (!scores || !gameState) {
         this.resetScores();
       } else {
         this.scores = scores;
         this.teams = teams.filter(t => !!t) || [];
+        this.state = {
+          waiting: gameState.waiting,
+          nextTime: new Date(gameState.nextTime)
+        };
+
         this.messages = messages || [];
         if (waypoints) {
           this.waypoints = waypoints;
@@ -345,10 +349,6 @@ class GoldRush {
     this.teams = [];
     this.saveScores();
     this.saveTeams();
-    this.store.set(STORE_KEYS.TIME, { date: new Date() })
-      .catch(ex => {
-        console.log(`GoldRush: Error saving time to store - ${errorMessage(ex)}`);
-      });
   }
 
   saveScores() {
@@ -361,6 +361,12 @@ class GoldRush {
   saveTeams() {
     return this.store.set(STORE_KEYS.TEAMS, this.teams).catch(ex => {
       console.log(`GoldRush: Error saving teams to store - ${errorMessage(ex)}`);
+    });
+  }
+
+  saveGameState() {
+    return this.store.set(STORE_KEYS.GAMESTATE, this.state).catch(ex => {
+      console.log(`GoldRush: Error saving game state to store - ${errorMessage(ex)}`);
     });
   }
 
