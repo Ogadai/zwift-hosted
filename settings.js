@@ -52,6 +52,18 @@ module.exports = {
         ])
       }
     },
+    4: {
+      map: '/maps/innsbruck.png',
+      background: '#7C9938',
+      viewBox: '-74000 -308000 847000 847000',
+      rotate: "(0,0,0)",
+      translate: "(0,0)",
+      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      points: {
+        get: () => Promise.resolve([
+        ])
+      }
+    },
     events: {
       zwiftquest: {
         1: {
