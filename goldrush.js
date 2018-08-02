@@ -44,9 +44,9 @@ const TEAM_LIST = [
 
 class GoldRush {
   constructor(worldId, code, team) {
-    this.store = new Store({ ttl: 60 * 60, name: `goldrush${code}` });
-    this.scoreStore = new Store({ ttl: 60 * 60, name: `goldrushScores${code}` });
-    this.messageStore = new Store({ ttl: MESSAGE_DISPLAY_SECONDS, name: `goldrushMsg${code}`, list: true });
+    this.store = new Store({ ttl: 60 * 60, name: `goldrush-${worldId}-${code}` });
+    this.scoreStore = new Store({ ttl: 60 * 60, name: `goldrushScores-${worldId}-${code}` });
+    this.messageStore = new Store({ ttl: MESSAGE_DISPLAY_SECONDS, name: `goldrushMsg-${worldId}-${code}`, list: true });
     this.worldId = worldId;
     this.roadPoints = null;
     this.maxAltitude = 0;
