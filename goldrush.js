@@ -2,6 +2,7 @@ const axios = require('axios')
 
 const resultsUploadUrl = process.env.GoldRushPostResults;
 const resultsDownloadUrl = process.env.GoldRushGetResults;
+const teamGameSize = parseInt(process.env.TeamGameSize || '4');
 
 const Map = require('zwift-second-screen/server/map');
 const Store = require('zwift-second-screen/server/store');
@@ -105,7 +106,7 @@ class GoldRush {
   }
 
   isTeamGame() {
-    return this.forceTeams || (this.scores && (this.scores.length > 3));
+    return this.forceTeams || (this.scores && (this.scores.length >= teamGameSize));
   }
 
   infoPanel() {
