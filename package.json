@@ -24,7 +24,7 @@
     "moment": "^2.20.1",
     "node-cache": "^4.1.1",
     "redis": "^2.8.0",
-    "strava-live-segments": "0.0.14",
+    "strava-live-segments": "0.0.15",
     "zwift-mobile-api": "0.3.12",
     "zwift-second-screen": "0.1.23"
   }
