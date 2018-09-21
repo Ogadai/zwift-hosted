@@ -1,0 +1,36 @@
+version: "3"
+services:
+  node:
+    image: "node"
+    user: "node"
+    working_dir: /home/node/app
+    volumes:
+      - ./:/home/node/app
+    ports:
+      - 8080:8080
+      - 9229:9229
+    networks:
+      - zwiftgps-net
+    command: node --inspect=0.0.0.0 index.js
+    environment:
+      - NODE_ENV=development
+      - ServiceUsername
+      - ServicePassword
+      - StravaClientId
+      - StravaClientSecret
+      - ZwiftRateLimit=25
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+
+  redis:
+    image: redis
+    networks:
+      - zwiftgps-net
+    hostname: redis
+    volumes:
+      - ../data/redis:/data
+    restart: always
+
+networks:
+  zwiftgps-net:

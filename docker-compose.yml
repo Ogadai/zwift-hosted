@@ -1,0 +1,36 @@
+version: "3"
+services:
+  node:
+    image: "node"
+    user: "node"
+    working_dir: /home/node/app
+    volumes:
+      - ./:/home/node/app
+    ports:
+      - "8080:8080"
+    networks:
+      - redis-net
+    command: "npm start"
+    environment:
+      - NODE_ENV=production
+      - ServiceUsername
+      - ServicePassword
+      - StravaClientId
+      - StravaClientSecret
+      - ZwiftRateLimit=25
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+
+  redis:
+    image: redis
+    networks:
+      - redis-net
+    hostname: redis
+    volumes:
+      - ../data/redis:/data
+    restart: always
+
+networks:
+  redis-net:
+  
