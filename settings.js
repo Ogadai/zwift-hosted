@@ -68,6 +68,20 @@ module.exports = {
         ])
       }
     },
+    8: {
+      map: '/maps/london.png',
+      roads: '/maps/london-roads.json',
+      background: '#7C9938',
+      viewBox: '-67500 -383000 847000 847000',
+      rotate: "(0,0,0)",
+      translate: "(0,0)",
+      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      points: {
+        get: () => Promise.resolve([
+          
+        ])
+      }
+    },
     events: {
       zwiftquest: {
         1: {
@@ -98,6 +112,9 @@ module.exports = {
         },
         5: {
           points: (...params) => new GoldRush(5, ...params)
+        },
+        8: {
+          points: (...params) => new GoldRush(8, ...params)
         }
       }
     }

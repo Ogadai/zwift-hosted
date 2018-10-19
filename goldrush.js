@@ -12,14 +12,16 @@ const rotations = {
   1: 90,
   2: 90,
   3: 0,
-  5: 0
+  5: 0,
+  8: 0
 };
 
 const counts = {
   1: 40,
   2: 10,
   3: 25,
-  5: 25
+  5: 25,
+  5: 15
 };
 
 const distance = (p1, p2) => Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
