@@ -52,6 +52,20 @@ module.exports = {
         ])
       }
     },
+    4: {
+      map: '/maps/newyork.png',
+      roads: '/maps/newyork-roads.json',
+      background: '#B9B9B9',
+      viewBox: '-388500 -554000 847000 847000',
+      rotate: "(0,0,0)",
+      translate: "(0,0)",
+      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      points: {
+        get: () => Promise.resolve([
+          
+        ])
+      }
+    },
     5: {
       map: '/maps/innsbruck.png',
       roads: '/maps/innsbruck-roads.json',
@@ -65,20 +79,6 @@ module.exports = {
           { name: 'KoM', x: 185000, y: 629900, image: 'kom', rotate: 15 },
           { name: 'Sprint Banner', x: 33138, y: -71634, image: 'sprint', rotate: 50 },
           { name: 'Start Banner', x: -3784, y: 34427, image: 'start', rotate: 5 }
-        ])
-      }
-    },
-    8: {
-      map: '/maps/newyork.png',
-      //roads: '/maps/newyork-roads.json',
-      background: '#B9B9B9',
-      viewBox: '-388500 -554000 847000 847000',
-      rotate: "(0,0,0)",
-      translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
-          
         ])
       }
     },
@@ -110,11 +110,11 @@ module.exports = {
         3: {
           points: (...params) => new GoldRush(3, ...params)
         },
+        4: {
+          points: (...params) => new GoldRush(4, ...params)
+        },
         5: {
           points: (...params) => new GoldRush(5, ...params)
-        },
-        8: {
-          points: (...params) => new GoldRush(8, ...params)
         }
       }
     }

@@ -12,16 +12,16 @@ const rotations = {
   1: 90,
   2: 90,
   3: 0,
-  5: 0,
-  8: 0
+  4: 0,
+  5: 0
 };
 
 const counts = {
   1: 40,
   2: 10,
   3: 25,
-  5: 25,
-  5: 15
+  4: 15,
+  5: 25
 };
 
 const distance = (p1, p2) => Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
@@ -459,7 +459,7 @@ class GoldRush {
             // Get the class
             const className = this.getAttribute(svg, index, 'class') || '';
             const classes = className.split(' ');
-            if (classes.find(c => c == 'roadsegment')) {
+            if (classes.find(c => c == 'roadsegment') && classes.find(c => c == 'cycling')) {
               // See if there's an altitude
               const altitudeClass = classes.find(c => c.startsWith('altitude_'));
               const altitude = altitudeClass ? parseInt(altitudeClass.substring(9)) : 0;
