@@ -62,7 +62,9 @@ module.exports = {
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
       points: {
         get: () => Promise.resolve([
-          
+          { name: 'KOM', x: -19873, y: 21112, image: 'kom', rotate: -60 },
+          { name: 'Sprint Banner', x: -1000, y: -57000, image: 'sprint', rotate: 20 },
+          { name: 'Start Banner', x: 79161, y: -105983, image: 'start', rotate: 10 }
         ])
       }
     },
@@ -146,6 +148,7 @@ module.exports = {
       12109117,16359363,16359371,14032406,14120182,17264705, // Watopia
       12128826,12128917,12128762,12128880,12128718,11307826,11307809,11308213, // Richmond
       12744502,16802545,16781411,16781407,12749377,12749402,12749649,12744360, // London
+      19141090, 19141092, // New York
       18397965, 18397927, // Innsbruck
     ]
   }
