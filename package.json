@@ -1,0 +1,31 @@
+{
+  "name": "zwift-hosted",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "8.10.x"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ogadai/zwift-hosted.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ogadai/zwift-hosted/issues"
+  },
+  "homepage": "https://github.com/Ogadai/zwift-hosted#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "moment": "^2.20.1",
+    "node-cache": "^4.1.1",
+    "redis": "^2.8.0",
+    "strava-live-segments": "0.0.15",
+    "zwift-mobile-api": "0.3.14",
+    "zwift-second-screen": "0.1.27"
+  }
+}
