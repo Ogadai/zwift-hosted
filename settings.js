@@ -62,9 +62,9 @@ module.exports = {
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
       points: {
         get: () => Promise.resolve([
-          { name: 'KOM', x: -19873, y: 21112, image: 'kom', rotate: -60 },
-          { name: 'Sprint Banner', x: -1000, y: -57000, image: 'sprint', rotate: 20 },
-          { name: 'Start Banner', x: 79161, y: -105983, image: 'start', rotate: 10 }
+          { name: 'KOM', x: -19500, y: 20700, image: 'kom', rotate: -60 },
+          { name: 'Sprint Banner', x: -6000, y: -49500, image: 'sprint', rotate: 35 },
+          { name: 'Start Banner', x: 79500, y: -106000, image: 'start', rotate: 10 }
         ])
       }
     },
