@@ -17,7 +17,8 @@ module.exports = {
           { name: 'Hilly KOM', x: 49683, y: 54712, image: 'kom', rotate: 60 },
           { name: 'Sprint', x: -25404, y: -40021, image: 'sprint', rotate: 60 },
           { name: 'Epic KOM', x: -361987, y: 86048, image: 'mountain', rotate: 30 },
-          { name: 'Jungle Start', x: -499228, y: -263780, image: 'banner', rotate: 20 }
+          { name: 'Jungle Start', x: -499228, y: -263780, image: 'banner', rotate: 20 },
+          { name: 'Fuego Sprint', x: 62256, y: 321485, image: 'sprint', rotate: 170 }
         ])
       }
     },
