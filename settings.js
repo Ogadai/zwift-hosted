@@ -85,6 +85,19 @@ module.exports = {
         ])
       }
     },
+    7: {
+      map: '/maps/yorkshire.png',
+      roads: '/maps/yorkshire-roads.json',
+      background: '#7C9938',
+      viewBox: '-590000 -380000 847000 847000',
+      rotate: "(0,0,0)",
+      translate: "(0,0)",
+      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      points: {
+        get: () => Promise.resolve([
+        ])
+      }
+    },
     events: {
       zwiftquest: {
         1: {
