@@ -85,11 +85,59 @@ module.exports = {
         ])
       }
     },
+    6: {
+      map: '/maps/bologna.png',
+      background: '#C5C5C5',
+      viewBox: '-637200 -401400 847000 847000',
+      rotate: "(0,0,0)",
+      translate: "(0,0)",
+      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      points: {
+        get: () => Promise.resolve([
+        ])
+      }
+    },
     7: {
       map: '/maps/yorkshire.png',
       roads: '/maps/yorkshire-roads.json',
       background: '#7C9938',
       viewBox: '-590000 -380000 847000 847000',
+      rotate: "(0,0,0)",
+      translate: "(0,0)",
+      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      points: {
+        get: () => Promise.resolve([
+        ])
+      }
+    },
+    8: {
+      map: '/maps/critcity.png',
+      background: '#C5C5C5',
+      viewBox: '-206000 -208100 423500 423500',
+      rotate: "(0,0,0)",
+      translate: "(0,0)",
+      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      points: {
+        get: () => Promise.resolve([
+        ])
+      }
+    },
+    10: {
+      map: '/maps/france.png',
+      background: '#6E9A29',
+      viewBox: '-678447 -610687 1270500 1270500',
+      rotate: "(0,0,0)",
+      translate: "(0,0)",
+      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      points: {
+        get: () => Promise.resolve([
+        ])
+      }
+    },
+    11: {
+      map: '/maps/paris.png',
+      background: '#C5C5C5',
+      viewBox: '-423500 -423500 847000 847000',
       rotate: "(0,0,0)",
       translate: "(0,0)",
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
