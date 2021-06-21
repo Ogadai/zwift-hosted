@@ -146,6 +146,18 @@ module.exports = {
         ])
       }
     },
+    9: {
+      map: '/maps/makuriislands.png',
+      background: '#7B9937',
+      viewBox: '-710000 -346000 793000 793000',
+      rotate: "(0,0,0)",
+      translate: "(0,0)",
+      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      points: {
+        get: () => Promise.resolve([
+        ])
+      }
+    },
     events: {
       zwiftquest: {
         1: {
