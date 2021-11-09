@@ -23,7 +23,7 @@
     "axios": ">=0.19.0",
     "moment": "^2.20.1",
     "node-cache": "^4.1.1",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "strava-live-segments": "0.0.17",
     "zwift-mobile-api": "0.3.18",
     "zwift-second-screen": "0.1.44"
