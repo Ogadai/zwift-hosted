@@ -1,172 +1,184 @@
-﻿const ZwiftQuest = require('./zwiftquest');
+const ZwiftQuest = require('./zwiftquest');
 const GoldRush = require('./goldrush');
 
 module.exports = {
-  worlds: {
-    1: {
-      map: '/maps/watopia.png',
-      roads: '/maps/watopia-roads.json',
-      background: '#0886E4',
-      viewBox: '-641000 -801000 1640500 794000',
-      rotate: "(-90,122141,234864)",
-      translate: "(949427,295876)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
-          { name: 'Start Banner', x: 104047, y: -10948, image: 'start', rotate: 180 },
-          { name: 'Hilly KOM', x: 49683, y: 54712, image: 'kom', rotate: 60 },
-          { name: 'Sprint', x: -25404, y: -40021, image: 'sprint', rotate: 60 },
-          { name: 'Epic KOM', x: -361987, y: 86048, image: 'mountain', rotate: 30 },
-          { name: 'Jungle Start', x: -499228, y: -263780, image: 'banner', rotate: 20 },
-          { name: 'Fuego Sprint', x: 62256, y: 321485, image: 'sprint', rotate: 170 }
-        ])
-      }
-    },
-    2: {
-      map: '/maps/richmond.png',
-      background: '#B9B9B9',
-      viewBox: '-445000 -480000 847000 847000',
-      rotate: "(-90,170389,190060)",
-      translate: "(457062,36315)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
-          { name: 'Sprint Banner', x: 145912, y: -235695, image: 'sprint', rotate: 40 },
-          { name: 'Start Banner', x: -8764, y: 12332, image: 'start', rotate: 40 }
-        ])
-      }
-    },
-    3: {
-      map: '/maps/london.png',
-      roads: '/maps/london-roads.json',
-      background: '#7C9938',
-      viewBox: '-67500 -383000 847000 847000',
-      rotate: "(0,0,0)",
-      translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
-          { name: 'Box Hill', x: 474491, y: 138646, image: 'kom', rotate: 90 },
-          { name: 'Keith Hill', x: 550217, y: 287329, image: 'kompink', rotate: 80 },
-          { name: 'Sprint Banner', x: 230658, y: -28483, image: 'sprint', rotate: 55 },
-          { name: 'Start Banner', x: 591009, y: -82260, image: 'start', rotate: -80 }
-        ])
-      }
-    },
-    4: {
-      map: '/maps/newyork.png',
-      roads: '/maps/newyork-roads.json',
-      background: '#B9B9B9',
-      viewBox: '-388500 -554000 847000 847000',
-      rotate: "(0,0,0)",
-      translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
-          { name: 'KOM', x: -19500, y: 20700, image: 'kom', rotate: -60 },
-          { name: 'Sprint Banner', x: -6000, y: -49500, image: 'sprint', rotate: 35 },
-          { name: 'Start Banner', x: 79500, y: -106000, image: 'start', rotate: 10 }
-        ])
-      }
-    },
-    5: {
-      map: '/maps/innsbruck.png',
-      roads: '/maps/innsbruck-roads.json',
-      background: '#7C9938',
-      viewBox: '-343000 -243000 991000 991000',
-      rotate: "(0,0,0)",
-      translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
-          { name: 'KoM', x: 185000, y: 629900, image: 'kom', rotate: 15 },
-          { name: 'Sprint Banner', x: 33138, y: -71634, image: 'sprint', rotate: 50 },
-          { name: 'Start Banner', x: -3784, y: 34427, image: 'start', rotate: 5 }
-        ])
-      }
-    },
-    6: {
-      map: '/maps/bologna.png',
-      background: '#C5C5C5',
-      viewBox: '-637200 -401400 847000 847000',
-      rotate: "(0,0,0)",
-      translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
-        ])
-      }
-    },
-    7: {
-      map: '/maps/yorkshire.png',
-      roads: '/maps/yorkshire-roads.json',
-      background: '#7C9938',
-      viewBox: '-590000 -380000 847000 847000',
-      rotate: "(0,0,0)",
-      translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
-        ])
-      }
-    },
-    8: {
-      map: '/maps/critcity.png',
-      background: '#C5C5C5',
-      viewBox: '-206000 -208100 423500 423500',
-      rotate: "(0,0,0)",
-      translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
-        ])
-      }
-    },
-    10: {
-      map: '/maps/france.png',
-      background: '#6E9A29',
-      viewBox: '-678447 -610687 1270500 1270500',
-      rotate: "(0,0,0)",
-      translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
-        ])
-      }
-    },
-    11: {
-      map: '/maps/paris.png',
-      background: '#C5C5C5',
-      viewBox: '-423500 -423500 847000 847000',
-      rotate: "(0,0,0)",
-      translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
-        ])
-      }
-    },
-    9: {
-      map: '/maps/makuriislands.png',
-      background: '#7B9937',
-      viewBox: '-1135000 -772000 1220000 1220000',
-      rotate: "(0,0,0)",
-      translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
-        ])
-      }
-    },
-    17: {
-      map: '/maps/scotland.png',
-      background: '#7B9937',
-      viewBox: '-451000 -320000 639800 639800',
-      rotate: "(0,0,0)",
-      translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
-      points: {
-        get: () => Promise.resolve([
+    worlds: {
+        1: {
+            map: '/maps/watopia.png',
+            roads: '/maps/watopia-roads.json',
+            background: '#0886E4',
+            viewBox: '-641000 -801000 1640500 794000',
+            rotate: "(-90,122141,234864)",
+            translate: "(949427,295876)",
+            credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
+            points: {
+                get: () => Promise.resolve([
+                    { name: 'Start Banner', x: 104047, y: -10948, image: 'start', rotate: 180 },
+                    { name: 'Hilly KOM', x: 49683, y: 54712, image: 'kom', rotate: 60 },
+                    { name: 'Sprint', x: -25404, y: -40021, image: 'sprint', rotate: 60 },
+                    { name: 'Epic KOM', x: -361987, y: 86048, image: 'mountain', rotate: 30 },
+                    { name: 'Jungle Start', x: -499228, y: -263780, image: 'banner', rotate: 20 },
+                    { name: 'Fuego Sprint', x: 62256, y: 321485, image: 'sprint', rotate: 170 }
+                ])
+            }
+        },
+        2: {
+            map: '/maps/richmond.png',
+            background: '#B9B9B9',
+            viewBox: '-445000 -480000 847000 847000',
+            rotate: "(-90,170389,190060)",
+            translate: "(457062,36315)",
+            credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
+            points: {
+                get: () => Promise.resolve([
+                    { name: 'Sprint Banner', x: 145912, y: -235695, image: 'sprint', rotate: 40 },
+                    { name: 'Start Banner', x: -8764, y: 12332, image: 'start', rotate: 40 }
+                ])
+            }
+        },
+        3: {
+            map: '/maps/london.png',
+            roads: '/maps/london-roads.json',
+            background: '#7C9938',
+            viewBox: '-67500 -383000 847000 847000',
+            rotate: "(0,0,0)",
+            translate: "(0,0)",
+            credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
+            points: {
+                get: () => Promise.resolve([
+                    { name: 'Box Hill', x: 474491, y: 138646, image: 'kom', rotate: 90 },
+                    { name: 'Keith Hill', x: 550217, y: 287329, image: 'kompink', rotate: 80 },
+                    { name: 'Sprint Banner', x: 230658, y: -28483, image: 'sprint', rotate: 55 },
+                    { name: 'Start Banner', x: 591009, y: -82260, image: 'start', rotate: -80 }
+                ])
+            }
+        },
+        4: {
+            map: '/maps/newyork.png',
+            roads: '/maps/newyork-roads.json',
+            background: '#B9B9B9',
+            viewBox: '-388500 -554000 847000 847000',
+            rotate: "(0,0,0)",
+            translate: "(0,0)",
+            credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
+            points: {
+                get: () => Promise.resolve([
+                    { name: 'KOM', x: -19500, y: 20700, image: 'kom', rotate: -60 },
+                    { name: 'Sprint Banner', x: -6000, y: -49500, image: 'sprint', rotate: 35 },
+                    { name: 'Start Banner', x: 79500, y: -106000, image: 'start', rotate: 10 }
+                ])
+            }
+        },
+        5: {
+            map: '/maps/innsbruck.png',
+            roads: '/maps/innsbruck-roads.json',
+            background: '#7C9938',
+            viewBox: '-343000 -243000 991000 991000',
+            rotate: "(0,0,0)",
+            translate: "(0,0)",
+            credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
+            points: {
+                get: () => Promise.resolve([
+                    { name: 'KoM', x: 185000, y: 629900, image: 'kom', rotate: 15 },
+                    { name: 'Sprint Banner', x: 33138, y: -71634, image: 'sprint', rotate: 50 },
+                    { name: 'Start Banner', x: -3784, y: 34427, image: 'start', rotate: 5 }
+                ])
+            }
+        },
+        6: {
+            map: '/maps/bologna.png',
+            background: '#C5C5C5',
+            viewBox: '-637200 -401400 847000 847000',
+            rotate: "(0,0,0)",
+            translate: "(0,0)",
+            credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
+            points: {
+                get: () => Promise.resolve([
+                ])
+            }
+        },
+        7: {
+            map: '/maps/yorkshire.png',
+            roads: '/maps/yorkshire-roads.json',
+            background: '#7C9938',
+            viewBox: '-590000 -380000 847000 847000',
+            rotate: "(0,0,0)",
+            translate: "(0,0)",
+            credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
+            points: {
+                get: () => Promise.resolve([
+                ])
+            }
+        },
+        8: {
+            map: '/maps/critcity.png',
+            background: '#C5C5C5',
+            viewBox: '-206000 -208100 423500 423500',
+            rotate: "(0,0,0)",
+            translate: "(0,0)",
+            credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
+            points: {
+                get: () => Promise.resolve([
+                ])
+            }
+        },
+        10: {
+            map: '/maps/france.png',
+            background: '#6E9A29',
+            viewBox: '-678447 -610687 1270500 1270500',
+            rotate: "(0,0,0)",
+            translate: "(0,0)",
+            credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
+            points: {
+                get: () => Promise.resolve([
+                ])
+            }
+        },
+        11: {
+            map: '/maps/paris.png',
+            background: '#C5C5C5',
+            viewBox: '-423500 -423500 847000 847000',
+            rotate: "(0,0,0)",
+            translate: "(0,0)",
+            credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
+            points: {
+                get: () => Promise.resolve([
+                ])
+            }
+        },
+        9: {
+            map: '/maps/makuriislands.png',
+            background: '#7B9937',
+            viewBox: '-1135000 -772000 1220000 1220000',
+            rotate: "(0,0,0)",
+            translate: "(0,0)",
+            credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
+            points: {
+                get: () => Promise.resolve([
+                ])
+            }
+        },
+        17: {
+            map: '/maps/scotland.png',
+            background: '#aba73c',
+            viewBox: '-451000 -320000 639800 639800',
+            rotate: "(0,0,0)",
+            translate: "(0,0)",
+            credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
+            points: {
+                get: () => Promise.resolve([
+                    { name: 'Loch Loop Start/End', x: -189426.75, y: -65130.598, image: 'start', rotate: 270},
+                    { name: 'Breakaway Brae Start', x: -40179.074, y: -2401.4595, image: 'climbstart', rotate: 15 },
+                    { name: 'Breakaway Brae End', x: -4803.8457, y: -8944.207, image: 'kom', rotate: 35 },
+                    { name: 'Breakaway Brae Reverse Start', x: -29500.102, y:-19239.773, image: 'climbstart', rotate: 15 },
+                    { name: 'Champions Sprint Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },
+                    { name: 'Champions Sprint End', x: -246526.45, y: 64931.418, image: 'sprint', rotate: 270 },
+                    { name: 'Clyde Kicker Start', x: -204222.4, y: 53589.652, image: 'climbstart', rotate: 15 },
+                    { name: 'Clyde Kicker End', x: -203452.44, y: 83174.91, image: 'kom', rotate: 0 },
+                    { name: 'Clyde Kicker Reverse Start', x: -253522.94, y: 96473.945, image: 'climbstart', rotate: 15 },
+                    { name: 'Sgurr Summit North Start', x: -175249.84, y: 32838.324, image: 'climbstart', rotate: 15 },
+                    { name: 'Sgurr Summit End', x: -194222.1, y: -532.2133, image: 'kom', rotate: 15 },
+                    { name: 'Sgurr Summit South Start', x: -209968.36, y: -55463.453, image: 'climbstart', rotate: 15 },
         ])
       }
     },
