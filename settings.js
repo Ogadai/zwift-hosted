@@ -149,7 +149,7 @@ module.exports = {
     9: {
       map: '/maps/makuriislands.png',
       background: '#7B9937',
-      viewBox: '-1135000 -772000 1220000 1220000',
+      viewBox: '-1134750 -771750 1270800 1270800',
       rotate: "(0,0,0)",
       translate: "(0,0)",
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
