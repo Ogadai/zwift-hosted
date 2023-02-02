@@ -158,10 +158,10 @@ module.exports = {
         ])
       }
     },
-    13: {
+    17: {
       map: '/maps/scotland.png',
       background: '#7B9937',
-      viewBox: '-451000 -318000 639500 639500',
+      viewBox: '-451000 -320000 639500 639500',
       rotate: "(0,0,0)",
       translate: "(0,0)",
       credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
