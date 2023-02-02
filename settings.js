@@ -10,7 +10,7 @@ module.exports = {
       viewBox: '-641000 -801000 1640500 794000',
       rotate: "(-90,122141,234864)",
       translate: "(949427,295876)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
       points: {
         get: () => Promise.resolve([
           { name: 'Start Banner', x: 104047, y: -10948, image: 'start', rotate: 180 },
@@ -28,7 +28,7 @@ module.exports = {
       viewBox: '-445000 -480000 847000 847000',
       rotate: "(-90,170389,190060)",
       translate: "(457062,36315)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
       points: {
         get: () => Promise.resolve([
           { name: 'Sprint Banner', x: 145912, y: -235695, image: 'sprint', rotate: 40 },
@@ -43,7 +43,7 @@ module.exports = {
       viewBox: '-67500 -383000 847000 847000',
       rotate: "(0,0,0)",
       translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
       points: {
         get: () => Promise.resolve([
           { name: 'Box Hill', x: 474491, y: 138646, image: 'kom', rotate: 90 },
@@ -60,7 +60,7 @@ module.exports = {
       viewBox: '-388500 -554000 847000 847000',
       rotate: "(0,0,0)",
       translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
       points: {
         get: () => Promise.resolve([
           { name: 'KOM', x: -19500, y: 20700, image: 'kom', rotate: -60 },
@@ -76,7 +76,7 @@ module.exports = {
       viewBox: '-343000 -243000 991000 991000',
       rotate: "(0,0,0)",
       translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
       points: {
         get: () => Promise.resolve([
           { name: 'KoM', x: 185000, y: 629900, image: 'kom', rotate: 15 },
@@ -91,7 +91,7 @@ module.exports = {
       viewBox: '-637200 -401400 847000 847000',
       rotate: "(0,0,0)",
       translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
       points: {
         get: () => Promise.resolve([
         ])
@@ -104,7 +104,7 @@ module.exports = {
       viewBox: '-590000 -380000 847000 847000',
       rotate: "(0,0,0)",
       translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
       points: {
         get: () => Promise.resolve([
         ])
@@ -116,7 +116,7 @@ module.exports = {
       viewBox: '-206000 -208100 423500 423500',
       rotate: "(0,0,0)",
       translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
       points: {
         get: () => Promise.resolve([
         ])
@@ -128,7 +128,7 @@ module.exports = {
       viewBox: '-678447 -610687 1270500 1270500',
       rotate: "(0,0,0)",
       translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
       points: {
         get: () => Promise.resolve([
         ])
@@ -140,7 +140,7 @@ module.exports = {
       viewBox: '-423500 -423500 847000 847000',
       rotate: "(0,0,0)",
       translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
       points: {
         get: () => Promise.resolve([
         ])
@@ -152,7 +152,7 @@ module.exports = {
       viewBox: '-1135000 -772000 1220000 1220000',
       rotate: "(0,0,0)",
       translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
       points: {
         get: () => Promise.resolve([
         ])
@@ -164,9 +164,20 @@ module.exports = {
       viewBox: '-451000 -320000 639800 639800',
       rotate: "(0,0,0)",
       translate: "(0,0)",
-      credit: { prompt: 'Powered by', name: 'ZwiftBlog', href: 'http://zwiftblog.com/' },
+      credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
       points: {
         get: () => Promise.resolve([
+                    { name: 'Loch Loop Start/End', x: -189426.75, y: -65130.598, image: 'start', rotate: 270},
+                    { name: 'Breakaway Brae Start', x: -40179.074, y: -2401.4595, image: 'climbstart', rotate: 15 },
+                    { name: 'Breakaway Brae End', x: -4803.8457, y: -8944.207, image: 'kom', rotate: 35 },
+                    { name: 'Breakaway Brae Reverse Start', x: -29500.102, y:-19239.773, image: 'climbstart', rotate: 15 },
+                    { name: 'Champions Sprint Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },
+                    { name: 'Champions Sprint End', x: -246526.45, y: 64931.418, image: 'sprint', rotate: 270 },
+                    { name: 'Clyde Kicker Start', x: -204222.4, y: 53589.652, image: 'climbstart', rotate: 15 },
+                    { name: 'Clyde Kicker End', x: -203452.44, y: 83174.91, image: 'kom', rotate: 0 },
+                    { name: 'Sgurr Summit North Start', x: -175249.84, y: 32838.324, image: 'climbstart', rotate: 15 },
+                    { name: 'Sgurr Summit End', x: -194222.1, y: -532.2133, image: 'kom', rotate: 15 },
+                    { name: 'Sgurr Summit South Start', x: -209968.36, y: -55463.453, image: 'climbstart', rotate: 15 },
         ])
       }
     },
