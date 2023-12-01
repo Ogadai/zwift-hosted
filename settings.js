@@ -4,10 +4,10 @@ const GoldRush = require('./goldrush');
 module.exports = {
     worlds: {
         1: {
-            map: '/maps/watopia.png',
+            map: '/maps/watopia.jpg',
             roads: '/maps/watopia-roads.json',
             background: '#0886E4',
-            viewBox: '-641000 -801000 1640500 794000',
+            viewBox: '-852000 -1858500 1851300 2168400',
             rotate: "(-90,122141,234864)",
             translate: "(949427,295876)",
             credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
@@ -15,7 +15,7 @@ module.exports = {
                 get: () => Promise.resolve([
                     { name: 'Start Banner', x: 104047, y: -10948, image: 'start', rotate: 180 },
                     { name: 'Hilly KOM', x: 49683, y: 54712, image: 'kom', rotate: 60 },
-                    { name: 'Sprint', x: -25404, y: -40021, image: 'sprint', rotate: 60 },
+                    { name: 'Sprint', x: -24300, y: -40500, image: 'sprint', rotate: 60 },
                     { name: 'Epic KOM', x: -361987, y: 86048, image: 'mountain', rotate: 30 },
                     { name: 'Jungle Start', x: -499228, y: -263780, image: 'banner', rotate: 20 },
                     { name: 'Fuego Sprint', x: 62256, y: 321485, image: 'sprint', rotate: 170 }
