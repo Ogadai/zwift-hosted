@@ -26,11 +26,10 @@ build/Release
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
 
-process.env
-
-
 .vs/
 npm-debug.log*
 web.config
 
 .vscode
+
+process.env
