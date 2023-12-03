@@ -1,6 +1,6 @@
 {
   "name": "zwift-hosted",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "engines": {
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ogadai/zwift-hosted.git"
+    "url": "git+https://github.com/wtrl-Racing/zwift-hosted.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Ogadai/zwift-hosted/issues"
+    "url": "https://github.com/wtrl-Racing/zwift-hosted/issues"
   },
-  "homepage": "https://github.com/Ogadai/zwift-hosted#readme",
+  "homepage": "https://github.com/wtrl-Racing/zwift-hosted#readme",
   "dependencies": {
     "axios": ">=0.19.0",
     "moment": "^2.20.1",
