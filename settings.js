@@ -23,6 +23,7 @@ module.exports = {
                     { name: 'Epic Fwd Start', x: -361987, y: 86048, image: 'climbstart', rotate: 30 },*/
                     { name: 'Epic KOM', x: -361987, y: 86048, image: 'mountain', rotate: 30 },
                     { name: 'Jungle Start', x: -498690, y: -268679, image: 'start', rotate: 180 },
+                    { name: 'Fuego Sprint', x: 62256, y: 321485, image: 'sprint', rotate: 170 },
                     /*{ name: 'Epic Rev Start', x: -361987, y: 86048, image: 'climbstart', rotate: 30 },
                     { name: 'Jungle Start', x: -499228, y: -263780, image: 'banner', rotate: 20 },
                     { name: 'Volcano Start', x: -209968.36, y: -55463.453, image: 'climbstart', rotate: 15 },
