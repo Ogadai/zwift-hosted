@@ -39,7 +39,7 @@ module.exports = {
                     { name: 'Acropolis Sprint', x: 62256, y: 321485, image: 'sprint', rotate: 170 },
                     { name: 'Acropolis Rev Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },
                     { name: 'Sasquatch Fwd Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },*/
-                    { name: 'Sasquatch Sprint', x: -497821.88, y: 448120.25, image: 'sprint', rotate: 170 },
+                    { name: 'Sasquatch Sprint', x: -497821.88, y: 448120.25, image: 'sprint', rotate: 80 },
                     /*{ name: 'Sasquatch Rev Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },*/
                 ])
             }
