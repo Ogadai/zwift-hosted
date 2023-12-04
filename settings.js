@@ -9,7 +9,7 @@ module.exports = {
             background: '#0886E4',
             viewBox: '-691045 -808000 1570300 1106100',
             rotate: "(-90,122141,234864)",
-            translate: "(949427,295876)",
+            translate: "(948000,16570)",
             credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
             points: {
                 get: () => Promise.resolve([
@@ -22,26 +22,26 @@ module.exports = {
                     /*{ name: 'JWB Rev Start', x: -24300, y: -40500, image: 'sprintstart', rotate: 60 },
                     { name: 'Epic Fwd Start', x: -361987, y: 86048, image: 'climbstart', rotate: 30 },*/
                     { name: 'Epic KOM', x: -361987, y: 86048, image: 'mountain', rotate: 30 },
-                    { name: 'Jungle Start', x: -498690, y: -268679, image: 'start', rotate: 180 },
+                    { name: 'Jungle Start', x: -498100, y: -265679, image: 'start', rotate: 10 },
                     { name: 'Fuego Sprint', x: 62256, y: 321485, image: 'sprint', rotate: 170 },
                     /*{ name: 'Epic Rev Start', x: -361987, y: 86048, image: 'climbstart', rotate: 30 },
                     { name: 'Jungle Start', x: -499228, y: -263780, image: 'banner', rotate: 20 },
                     { name: 'Volcano Start', x: -209968.36, y: -55463.453, image: 'climbstart', rotate: 15 },
                     { name: 'Volcano KOM', x: 62256, y: 321485, image: 'mountian', rotate: 170 },
                     { name: 'Alpe de Zwift Start', x: -209968.36, y: -55463.453, image: 'climbstart', rotate: 15 },
-                    { name: 'Alpe de Zwift', x: 62256, y: 321485, image: 'mountain', rotate: 170 },
-                    { name: 'Stoneway Fwd Start', x: 62256, y: 321485, image: 'sprintstart', rotate: 170 },
-                    { name: 'Stoneway Sprint', x: 62256, y: 321485, image: 'sprint', rotate: 170 },
-                    { name: 'Stoneway Rev Start', x: 62256, y: 321485, image: 'sprintstart', rotate: 170 },
-                    { name: 'Woodland Fwd Start', x: 62256, y: 321485, image: 'sprintstart', rotate: 170 },
-                    { name: 'Woodland Sprint', x: 62256, y: 321485, image: 'sprint', rotate: 170 },
-                    { name: 'Woodland Rev Start', x: 62256, y: 321485, image: 'sprintstart', rotate: 170 },
-                    { name: 'Acropolis Fwd Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },*/
-                    { name: 'Acropolis Sprint', x: -727499.1, y: 25671.162, image: 'sprint', rotate: 90 },
-                    /*{ name: 'Acropolis Rev Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },
-                    { name: 'Sasquatch Fwd Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },*/
-                    { name: 'Sasquatch Sprint', x: -497821.88, y: 448120.25, image: 'sprint', rotate: 80 },
-                    /*{ name: 'Sasquatch Rev Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },*/
+                    { name: 'Alpe de Zwift', x: 62256, y: 321485, image: 'mountain', rotate: 170 },*/
+                    { name: 'Stoneway Fwd Start', x: -754399, y: -27400, image: 'sprintstart', rotate: 150 },
+                    { name: 'Stoneway Sprint', x: -725399, y: -27200, image: 'sprint', rotate: 80 },
+                    { name: 'Stoneway Rev Start', x: -725899, y: -43500, image: 'sprintstart', rotate: 150 },
+                    /*{ name: 'Woodland Fwd Start', x: 62256, y: 321485, image: 'sprintstart', rotate: 170 },*/
+                    { name: 'Woodland Sprint', x: -498190.53, y: 448588.34, image: 'sprint', rotate: 90 },
+                    /*{ name: 'Woodland Rev Start', x: 62256, y: 321485, image: 'sprintstart', rotate: 170 },
+                    { name: 'Acropolis Fwd Start', x: -711277.56, y:298740.38, image: 'sprintstart', rotate: 15 },
+                    { name: 'Acropolis Sprint', x: -727499.1, y: 25671.162, image: 'sprint', rotate: 90 },*/
+                    /*{ name: 'Acropolis Rev Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },*/
+                    { name: 'Sasquatch Fwd Start', x: -709783.8, y: 293150.53, image: 'sprintstart', rotate: 45 },
+                    { name: 'Sasquatch Sprint', x: -739764.1, y: 287320.56, image: 'sprint', rotate: 80 },
+                    { name: 'Sasquatch Rev Start', x: -772783.8, y: 283150.53, image: 'sprintstart', rotate: 190 },
                 ])
             }
         },
