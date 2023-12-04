@@ -7,7 +7,7 @@ module.exports = {
             map: '/maps/watopia.jpg',
             roads: '/maps/watopia-roads.json',
             background: '#0886E4',
-            viewBox: '-972000 -835500 2111300 1147400',
+            viewBox: '0 500 1822300 1341400',
             rotate: "(-90,122141,234864)",
             translate: "(949427,295876)",
             credit: { prompt: 'Powered by', name: 'WTRL Racing', href: 'https://www.wtrl.racing' },
