@@ -31,3 +31,6 @@ npm-debug.log*
 web.config
 
 .vscode
+
+# Private Settings
+process.env
