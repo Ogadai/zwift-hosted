@@ -34,7 +34,7 @@ module.exports = {
                     { name: 'Stoneway Sprint', x: -725399, y: -27200, image: 'sprint', rotate: 80 },
                     { name: 'Stoneway Rev Start', x: -725899, y: -43500, image: 'sprintstart', rotate: 150 },
                     /*{ name: 'Woodland Fwd Start', x: 62256, y: 321485, image: 'sprintstart', rotate: 170 },*/
-                    { name: 'Woodland Sprint', x: -498190.53, y: 448588.34, image: 'sprint', rotate: 170 },
+                    { name: 'Woodland Sprint', x: -498190.53, y: 448588.34, image: 'sprint', rotate: 90 },
                     /*{ name: 'Woodland Rev Start', x: 62256, y: 321485, image: 'sprintstart', rotate: 170 },
                     { name: 'Acropolis Fwd Start', x: -711277.56, y:298740.38, image: 'sprintstart', rotate: 15 },
                     { name: 'Acropolis Sprint', x: -727499.1, y: 25671.162, image: 'sprint', rotate: 90 },*/
