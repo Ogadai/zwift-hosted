@@ -30,18 +30,18 @@ module.exports = {
                     { name: 'Volcano KOM', x: 62256, y: 321485, image: 'mountian', rotate: 170 },
                     { name: 'Alpe de Zwift Start', x: -209968.36, y: -55463.453, image: 'climbstart', rotate: 15 },
                     { name: 'Alpe de Zwift', x: 62256, y: 321485, image: 'mountain', rotate: 170 },*/
-                    { name: 'Stoneway Fwd Start', x: -754399, y: -28500, image: 'sprintstart', rotate: 170 },
-                    { name: 'Stoneway Sprint', x: -721499, y: 28500, image: 'sprint', rotate: 80 },
-                    { name: 'Stoneway Rev Start', x: -725399, y: -44500, image: 'sprintstart', rotate: 140 },
+                    { name: 'Stoneway Fwd Start', x: -754399, y: -27400, image: 'sprintstart', rotate: 150 },
+                    { name: 'Stoneway Sprint', x: -725399, y: -27200, image: 'sprint', rotate: 80 },
+                    { name: 'Stoneway Rev Start', x: -725899, y: -43500, image: 'sprintstart', rotate: 150 },
                     /*{ name: 'Woodland Fwd Start', x: 62256, y: 321485, image: 'sprintstart', rotate: 170 },
                     { name: 'Woodland Sprint', x: 62256, y: 321485, image: 'sprint', rotate: 170 },
                     { name: 'Woodland Rev Start', x: 62256, y: 321485, image: 'sprintstart', rotate: 170 },
-                    { name: 'Acropolis Fwd Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },*/
-                    { name: 'Acropolis Sprint', x: -727499.1, y: 25671.162, image: 'sprint', rotate: 90 },
-                    /*{ name: 'Acropolis Rev Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },
-                    { name: 'Sasquatch Fwd Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },*/
-                    { name: 'Sasquatch Sprint', x: -497821.88, y: 448120.25, image: 'sprint', rotate: 80 },
-                    /*{ name: 'Sasquatch Rev Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },*/
+                    { name: 'Acropolis Fwd Start', x: -711277.56, y:298740.38, image: 'sprintstart', rotate: 15 },
+                    { name: 'Acropolis Sprint', x: -727499.1, y: 25671.162, image: 'sprint', rotate: 90 },*/
+                    /*{ name: 'Acropolis Rev Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },*/
+                    { name: 'Sasquatch Fwd Start', x: -227425.2, y: 65148.137, image: 'sprintstart', rotate: 15 },
+                    { name: 'Sasquatch Sprint', x: -739764.1, y: 287320.56, image: 'sprint', rotate: 80 },
+                    { name: 'Sasquatch Rev Start', x: -772783.8, y: 283150.53, image: 'sprintstart', rotate: 15 },
                 ])
             }
         },
