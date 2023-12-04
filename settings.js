@@ -16,7 +16,7 @@ module.exports = {
                     { name: 'Start Banner', x: 107500, y: -10000, image: 'start', rotate: 160 },
                     { name: 'Hilly Fwd Start', x: 46683, y: 72712, image: 'climbstart', rotate: 60 },
                     { name: 'Hilly KOM', x: 46683, y: 72712, image: 'kom', rotate: 60 },
-                    { name: 'Hilly Rev Start', x: 46683, y: 72712,, image: 'climbstart', rotate: 60 },
+                    { name: 'Hilly Rev Start', x: 46683, y: 72712, image: 'climbstart', rotate: 60 },
                     /*{ name: 'JWB Fwd Start', x: -24300, y: -40500, image: 'sprintstart', rotate: 60 },*/
                     { name: 'JWB Sprint', x: -41300, y: -39500, image: 'sprint', rotate: 60 },
                     /*{ name: 'JWB Rev Start', x: -24300, y: -40500, image: 'sprintstart', rotate: 60 },
